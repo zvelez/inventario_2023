@@ -33,5 +33,6 @@ Route::get('/users/create', [UserController::class, 'create'])->middleware(['aut
 Route::post('/users/create', [UserController::class, 'store'])->middleware(['auth', 'verified']);
 Route::get('/users/{id}', [UserController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
 Route::put('/users/{id}', [UserController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::delete('/users/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

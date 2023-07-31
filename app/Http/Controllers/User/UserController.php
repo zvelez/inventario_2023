@@ -34,7 +34,8 @@ class UserController extends Controller {
 
     event(new Registered($user));
 
-    return redirect()->route('users');
+    return redirect()->route('users')
+                      ->with('message', 'Usuario <'.$user->fullname.'> registrado correctamente.');
   }
 
   function index() {
@@ -62,9 +63,20 @@ class UserController extends Controller {
     $user->email = $request->email;
     $user->save();
 
-    return redirect()->route('users');
+    return redirect()->route('users')
+                    ->with('message', 'Usuario <'.$user->fullname.'> actualizado correctamente.');
   }
 
-  function delete() {}
+  function delete($id) {
+
+    $user = User::find($id);
+    $user->status = $user->status===1? 0 : 1;
+    $user->save();
+
+    $statusStr = $user->status===1? 'activado' : 'bloqueado';
+
+    return redirect()->route('users')
+                    ->with('message', 'Usuario <'.$user->fullname.'> '.$statusStr.' correctamente.');
+  }
 
 }
