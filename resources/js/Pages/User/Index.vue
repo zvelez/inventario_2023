@@ -92,7 +92,7 @@ const okModal = () => {
               </div>
               <div class="modal-body">
                 <p class="text-center" v-if="userSel != null">
-                  ¿Realmente desea {{ userSel.status===1? 'Bloquear' : 'Desbloquear' }} al usuario <strong>{{ userSel.fullname }}</strong>?
+                  ¿Realmente desea {{ userSel.status===1? 'bloquear' : 'dDesbloquear' }} al usuario <strong>{{ userSel.fullname }}</strong>?
                 </p>
                 <p class="text-center" v-else>Algo salio mal.</p>
               </div>
