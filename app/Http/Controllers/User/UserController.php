@@ -27,9 +27,9 @@ class UserController extends Controller {
     $newPass = Str::random(8);
 
     $user = User::create([
-        'fullname' => $request->fullname,
-        'email' => $request->email,
-        'password' => Hash::make($newPass),
+      'fullname' => $request->fullname,
+      'email' => $request->email,
+      'password' => Hash::make($newPass),
     ]);
 
     event(new Registered($user));

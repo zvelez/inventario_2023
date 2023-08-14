@@ -7,10 +7,11 @@ import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPen, faUserCheck, faUserLock } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faPen, faUserCheck, faUserLock } from '@fortawesome/free-solid-svg-icons'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
+library.add(faChevronDown)
 library.add(faPen)
 library.add(faUserCheck)
 library.add(faUserLock)
