@@ -27,29 +27,29 @@ const submit = () => {
 
 <template>
     <BreezeGuestLayout>
-        <Head title="Reset Password" />
+        <Head title="Reestablecer Contraseña" />
 
         <BreezeValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
             <div>
                 <BreezeLabel for="email" value="Email" />
-                <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+                <BreezeInput id="email" type="email" class="mt-1 form-control" v-model="form.email" required autofocus autocomplete="username" />
             </div>
 
-            <div class="mt-4">
+            <div class="form-group mt-4">
                 <BreezeLabel for="password" value="Password" />
-                <BreezeInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
+                <BreezeInput id="password" type="password" class="mt-1 form-control" v-model="form.password" required autocomplete="new-password" />
             </div>
 
-            <div class="mt-4">
+            <div class="form-group mt-4">
                 <BreezeLabel for="password_confirmation" value="Confirm Password" />
-                <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
+                <BreezeInput id="password_confirmation" type="password" class="mt-1 form-control" v-model="form.password_confirmation" required autocomplete="new-password" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
+            <div class="d-flex align-items-center justify-content-end mt-4">
+                <BreezeButton :class="{'btn': true, 'btn-success': true,'opacity-25': form.processing }" :disabled="form.processing">
+                    Reestablecer
                 </BreezeButton>
             </div>
         </form>

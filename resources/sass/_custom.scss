@@ -130,9 +130,12 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.bg-gray-100 {
+  background-color: rgb(243, 244, 246);
+}
 .text-gray-700 {
   --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
+  color: rgb(55 65 81);
 }
 .leading-5 {
   line-height: 1.25rem;
