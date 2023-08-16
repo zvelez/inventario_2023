@@ -15,7 +15,7 @@ class CreateSuppliesTable extends Migration {
       $table->id();
       $table->string('code');
       $table->string('description');
-      $table->string('marca');
+      $table->string('brand');
       $table->decimal('amount', 21, 3);
       $table->decimal('unitprice', 16, 2);
       $table->text('deliverynote')->nullable();
