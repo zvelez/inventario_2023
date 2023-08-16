@@ -52,6 +52,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::put('/suppliers/{id}', [SupplierController::class, 'edit']);
   Route::delete('/suppliers/{id}', [SupplierController::class, 'delete']);
   
+  Route::get('/inventory', [SupplierController::class, 'index'])->name('inventory');
+
+  Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 });
 
 require __DIR__.'/auth.php';
