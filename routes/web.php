@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Orderentry\OrderentryController;
 use App\Http\Controllers\Supplier\SupplierController;
+use App\Http\Controllers\Supply\SupplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +56,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
   
   Route::get('/inventory', [SupplierController::class, 'index'])->name('inventory');
 
-  Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+  Route::get('/orders', [OrderentryController::class, 'index'])->name('orders');
+  Route::get('/orders/create', [OrderentryController::class, 'create'])->name('orders.create');
+  Route::post('/orders/create', [OrderentryController::class, 'store']);
+  Route::get('/orders/{oid}/add', [SupplyController::class, 'create'])->name('orders.add');
+  Route::post('/orders/{oid}/add', [SupplyController::class, 'store']);
+  Route::get('/orders/{id}', [OrderentryController::class, 'update'])->name('orders.update');
+  Route::put('/orders/{id}', [OrderentryController::class, 'edit']);
+  Route::delete('/orders/{id}', [OrderentryController::class, 'delete']);
 });
 
 require __DIR__.'/auth.php';

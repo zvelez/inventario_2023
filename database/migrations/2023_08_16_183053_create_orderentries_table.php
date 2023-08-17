@@ -18,12 +18,14 @@ class CreateOrderentriesTable extends Migration {
       $table->string('solicitantmanager');
       $table->date('solicitantdate');
       $table->string('deliveryaddress');
-      $table->date('deliverydate');
+      $table->date('deliverydate')->nullable();
+      $table->date('estimateddeliverydate')->nullable();
       $table->string('deliveryreceptionist');
-      $table->text('deliverynote');
-      $table->string('deliveryref');
-      $table->string('deliverydoc');
-      $table->unsignedBigInteger('su')->unsigned();
+      $table->text('deliverynote')->nullable();
+      $table->string('deliveryref')->nullable();
+      $table->string('deliverydoc')->nullable();
+      $table->unsignedBigInteger('supplier_id')->unsigned();
+      $table->foreign('supplier_id')->references('id')->on('suppliers');
       $table->timestamps();
     });
   }

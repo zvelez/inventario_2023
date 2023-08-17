@@ -37,6 +37,9 @@
         "@fortawesome/fontawesome-svg-core": "^6.4.0",
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^3.0.3",
-        "jquery": "^3.7.0"
+        "jquery": "^3.7.0",
+        "moment": "^2.29.4",
+        "react-currency-input-field": "^3.6.11",
+        "vue3-treeselect": "^0.1.10"
     }
 }

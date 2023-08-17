@@ -19,6 +19,8 @@ class CreateSuppliesTable extends Migration {
       $table->decimal('amount', 21, 3);
       $table->decimal('unitprice', 16, 2);
       $table->text('deliverynote')->nullable();
+      $table->unsignedBigInteger('orderentry_id')->unsigned();
+      $table->foreign('orderentry_id')->references('id')->on('orderentries');
       $table->timestamps();
     });
   }
