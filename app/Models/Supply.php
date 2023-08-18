@@ -15,16 +15,23 @@ class Supply extends Model {
     'code',
     'description',
     'brand',
+    'unit',
     'amount',
     'unitprice',
     'deliverynote',
     'orderentry_id',
   ];
 
-  protected $appends = ['resume_str'];
+  protected $appends = ['resume_str', 'totalprice'];
 
   public function getResumeStrAttribute() {
-    return $this->attributes['code'] . ' | ' . $this->attributes['brand'] . ' | ' . $this->attributes['amount'] . ' a Bs' .  $this->attributes['unitprice'];
+    return isset($this->attributes['code']) ? 
+        $this->attributes['code'] . ' | ' . $this->attributes['brand'] . ' | ' . 
+          $this->attributes['amount']. $this->attributes['unit'] . ' a Bs' .  $this->attributes['unitprice'] : '';
+  }
+
+  public function getTotalpriceAttribute() {
+    return round(doubleval($this->amount) * doubleval($this->unitprice), 2);
   }
 
   public function order(): HasMany {

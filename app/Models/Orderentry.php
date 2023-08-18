@@ -30,10 +30,12 @@ class Orderentry extends Model {
 
   public function getAmounttotalAttribute() {
     $total = 0;
-    $supplies = Supply::where('orderentry_id', '=', $this->attributes['id'])->get();
-    foreach($supplies as $supp) {
-      $calc = doubleval($supp->amount) * doubleval($supp->unitprice);
-      $total = $total + round($calc, 2);
+    if(isset($this->attributes['id'])) {
+      $supplies = Supply::where('orderentry_id', '=', $this->attributes['id'])->get();
+      foreach($supplies as $supp) {
+        $calc = doubleval($supp->amount) * doubleval($supp->unitprice);
+        $total = $total + round($calc, 2);
+      }
     }
     return $total;
   }

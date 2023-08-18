@@ -45,8 +45,6 @@ class SupplierController extends Controller {
     return Inertia::render('Supplier/Index', $data);
   }
 
-  function view() {}
-
   function update($id) {
     $data = [];
     $data['supplier'] = Supplier::find($id);

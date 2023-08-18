@@ -24,6 +24,7 @@ class SupplyController extends Controller {
       'brand' => 'required|string|max:255',
       'amount' => 'required|numeric',
       'orderentry_id' => 'required',
+      'op' => 'required',
     ]);
 
     $supply = Supply::create([
@@ -38,7 +39,20 @@ class SupplyController extends Controller {
 
     $order = Orderentry::with('supplier')->find($request->orderentry_id);
 
-    return redirect()->route('orders', ['oid' => $supply->id])
-                      ->with('message', 'Insumo <'. $supply->code .'> registrado correctamente en el pedido al Proveedor <'. $order->supplier->name . ' en fecha ' . $order->date .'>.');
+    $redirect = $request->op==='end' ? redirect()->route('orders') : back();
+    return $redirect->with('message', 'Insumo <'. $supply->code .'> registrado correctamente en el pedido al Proveedor <'. $order->supplier->name . ' en fecha ' . $order->date .'>.');
+  }
+
+  function view($id) {
+    $data = [];
+    $data['supply'] = Supply::with(['supplier', 'supplies'])->find($id);
+    return Inertia::render('Supply/View', $data);
+  }
+
+  function update($id) {
+    $data = [];
+    $data['supply'] = Supply::find($id);
+    $data['order'] = Orderentry::with('supplier')->find($id);
+    return Inertia::render('Supply/Form', $data);
   }
 }

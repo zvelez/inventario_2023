@@ -56,6 +56,9 @@ onMounted(() => {
                 </td>
                 <td class="align-middle">Bs{{ order.amounttotal }}</td>
                 <td class="align-middle" style="text-wrap: nowrap !important;">
+                  <Link :href="route('orders.view', {id: order.id})" class="btn btn-primary m-1">
+                    <font-awesome-icon :icon="['fa', 'eye']" />
+                  </Link>
                   <Link :href="route('orders.update', {id: order.id})" class="btn btn-warning m-1">
                     <font-awesome-icon :icon="['fa', 'pen']" />
                   </Link>

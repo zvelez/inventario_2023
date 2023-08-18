@@ -61,7 +61,11 @@ class OrderentryController extends Controller {
     return Inertia::render('Orderentry/Index', $data);
   }
 
-  function view() {}
+  function view($id) {
+    $data = [];
+    $data['order'] = Orderentry::orderBy('created_at', 'DESC')->with(['supplies', 'supplier'])->find($id);
+    return Inertia::render('Orderentry/View', $data);
+  }
 
   function update($id) {
     $data = [];

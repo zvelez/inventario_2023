@@ -1,11 +1,11 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import BreezeButton from '@/Components/Button.vue';
-import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
 
 const props = defineProps({
   supply: Object,
@@ -16,9 +16,11 @@ const form = useForm({
   code: props.supply.id !== undefined ? props.supply.code : '',
   description: props.supply.id !== undefined ? props.supply.description : '',
   brand: props.supply.id !== undefined ? props.supply.brand : '',
+  unit: props.supply.id !== undefined ? props.supply.unit : '',
   amount: props.supply.id !== undefined ? props.supply.amount : 0.000,
   unitprice: props.supply.id !== undefined ? props.supply.unitprice : 0.000,
   orderentry_id: props.supply.id !== undefined ? props.supply.orderentry_id : props.order.id,
+  op: null,
 });
 
 const titlePage = props.supply.id !== undefined ? 
@@ -28,14 +30,16 @@ const titlePage = props.supply.id !== undefined ?
 const buttonLabel = props.supply.id !== undefined ? 'Actualizar' : 'Añadir más insumos';
 
 const submit = () => {
-  console.log(props.supply);
+  console.log(form.data());
   if(props.supply.id !== undefined) {
     form.put(route('suppliers.update', {id: props.supply.id}));
   }
   else {
     form.post(route('orders.add', {oid: props.order.id}));
   }
+  form.reset();
 };
+
 
 const clickAction = () => {
   console.log(props.supply);
@@ -71,14 +75,17 @@ const clickAction = () => {
           </div>
           <div class="form-group">
             <BreezeLabel for="amount" class="col-form-label" value="Cantidad" />
-            <BreezeInput id="amount" type="number" class="form-control" v-model="form.amount" step=".001" required />
+            <div class="d-flex justify-content-between">
+              <BreezeInput id="unit" class="form-control" v-model="form.unit" style="width: 80px;" required placeholder="Unidad" />
+              <BreezeInput id="amount" type="number" class="form-control" v-model="form.amount" step=".001" style="width: calc(100% - 95px);" required />
+            </div>
           </div>
 
           <div class="d-flex justify-content-between m-2">
             <Link :href="route('orders')" class="btn btn-link">Cancelar</Link>
             <div class="d-flex">
-              <BreezeButton class="btn btn-success" v-if="props.supply.id === undefined">Finalizar</BreezeButton>
-              <BreezeButton class="btn btn-primary">{{ buttonLabel }}</BreezeButton>
+              <BreezeButton class="btn btn-success" @click="form.op='end'" v-if="props.supply.id === undefined">Finalizar</BreezeButton>
+              <BreezeButton class="btn btn-primary" @click="form.op='next'">{{ buttonLabel }}</BreezeButton>
             </div>
           </div>
         </form>

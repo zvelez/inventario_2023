@@ -166,3 +166,53 @@ button {
   border-width: 0px;
   background-color: transparent;
 }
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-black {
+  font-weight: 900;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.table-total {
+  span {
+    display: inline-block;
+
+    &:last-child {
+      width: calc(100% - 16px);
+      text-align: right;
+    }
+  }
+}
+
+.dl-wrapper {
+  min-width: 296px;
+
+  dl {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  
+  dt {
+    float: left;
+    clear: left;
+    width: 35%;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+  }
+  
+  dd {
+    float: left;
+    width: 65%;
+    padding: 0 10px;
+    margin: 0
+  }
+}
