@@ -34,10 +34,10 @@ class Orderentry extends Model {
       $supplies = Supply::where('orderentry_id', '=', $this->attributes['id'])->get();
       foreach($supplies as $supp) {
         $calc = doubleval($supp->amount) * doubleval($supp->unitprice);
-        $total = $total + round($calc, 2);
+        $total = $total + $calc;
       }
     }
-    return $total;
+    return round($total, 2);
   }
 
   public function supplies(): HasMany {

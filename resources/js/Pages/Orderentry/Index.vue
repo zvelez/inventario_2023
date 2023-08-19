@@ -4,11 +4,37 @@ import { onMounted, ref } from "vue";
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import { Modal } from "bootstrap";
 
+import axios from 'axios';
+
 const form = useForm();
 
 const props = defineProps({
   orders: Object,
 });
+
+const orderList = ref(props.orders);
+const statusFilter = ['Todos', 'Completados', 'En proceso'];
+const statusSel = ref(0);
+const isLoad = ref(true);
+
+const statusSelected = async() => {
+  isLoad.value = false;
+  const url = route('orders.filters');
+  try {
+    const request = await axios.post(url, {status: statusSel.value});
+    isLoad.value = true;
+    if(request.status === 200) {
+      console.log(request.data);
+      orderList.value = request.data;
+    }
+  }
+  catch (err) {
+    //console.log(err.message);
+    message.value = 'Se produjo un error';
+    isLoad.value = true;
+    setTimeout(() => message.value = null, 4000);
+  }
+}
 
 onMounted(() => {
 });
@@ -22,7 +48,14 @@ onMounted(() => {
           Pedidos a proveedor
         </h2>
         <div class="d-flex justify-content-between">
-          <div></div>
+          <div class="filters">
+            <div class="form-group">
+              <BreezeLabel for="deliverydate" class="col-form-label" value="Fecha"/>
+              <select id="state" class='form-control' v-model='statusSel' @change="statusSelected">
+                <option v-for='(data, index) in statusFilter' :value='index'>{{ data }}</option>
+              </select>
+            </div>
+          </div>
           <Link class="btn btn-primary" :href="route('orders.create')">Registrar nuevo</Link>
         </div>
         <div v-if="$page.props.flash.message"
@@ -39,6 +72,7 @@ onMounted(() => {
                 <th class="align-middle">Proveedor</th>
                 <th class="align-middle">Fecha</th>
                 <th class="align-middle">Fecha estimada de entrega</th>
+                <th class="align-middle">Fecha de entrega</th>
                 <th class="align-middle">Responsable de Recepción</th>
                 <th class="align-middle">Insumos</th>
                 <th class="align-middle">Cantidad Total</th>
@@ -46,10 +80,11 @@ onMounted(() => {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="order in props.orders">
+              <tr v-for="order in orderList">
                 <td class="align-middle">{{ order.supplier.name }}</td>
                 <td class="align-middle">{{ order.date }}</td>
                 <td class="align-middle">{{ order.estimateddeliverydate }}</td>
+                <td class="align-middle">{{ order.deliverydate }}</td>
                 <td class="align-middle">{{ order.deliveryreceptionist }}</td>
                 <td class="align-middle">
                   <p v-for="supp in order.supplies">{{ supp.resume_str }}</p>

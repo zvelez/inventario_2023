@@ -66,6 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::put('/orders/{id}/edit', [OrderentryController::class, 'edit']);
   Route::get('/orders/{oid}/receive', [OrderentryController::class, 'receive'])->name('orders.receive');
   Route::post('/orders/{oid}/receive', [OrderentryController::class, 'pickup']);
+  Route::post('/orders/filters', [OrderentryController::class, 'filters'])->name('orders.filters');
   Route::delete('/orders/{id}', [OrderentryController::class, 'delete']);
 
   Route::get('/supplies', [SupplyController::class, 'index'])->name('supplies');

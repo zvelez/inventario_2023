@@ -57,13 +57,13 @@ class OrderentryController extends Controller {
 
   function index() {
     $data = [];
-    $data['orders'] = Orderentry::orderBy('created_at', 'DESC')->with(['supplies', 'supplier'])->get();
+    $data['orders'] = Orderentry::orderBy('date', 'DESC')->with(['supplies', 'supplier'])->get();
     return Inertia::render('Orderentry/Index', $data);
   }
 
   function view($id) {
     $data = [];
-    $data['order'] = Orderentry::orderBy('created_at', 'DESC')->with(['supplies', 'supplier'])->find($id);
+    $data['order'] = Orderentry::with(['supplies', 'supplier'])->find($id);
     return Inertia::render('Orderentry/View', $data);
   }
 
@@ -99,10 +99,6 @@ class OrderentryController extends Controller {
     $order->deliveryreceptionist = $request->deliveryreceptionist;
     $order->estimateddeliverydate = $request->estimateddeliverydate;
     $order->supplier_id = $request->supplier_id;
-    //$order->deliverydate = $request->deliverydate;
-    //$order->deliverynote = $request->deliverynote;
-    //$order->deliveryref = $request->deliveryref;
-    //$order->deliverydoc = $request->deliverydoc;
     $order->save();
 
     $supplier = Supplier::find($request->supplier_id);
@@ -140,5 +136,22 @@ class OrderentryController extends Controller {
 
     return redirect()->route('orders')
                     ->with('message', 'Recepción a <'. $supplier->name. ' en fecha ' .$order->date .'> registrada correctamente.');
+  }
+
+  function filters(Request $request) {
+    $request->validate([
+      'status' => 'required|integer|between:0,2',
+    ]);
+    
+    $orders = Orderentry::orderBy('date', 'DESC')->with(['supplies', 'supplier']);
+    if($request->status == 1) {
+      $orders = $orders->whereNotNull('deliverydate');
+    }
+    else if($request->status == 2) {
+      $orders = $orders->whereNull('deliverydate');
+    }
+
+    $orders = $orders->get();
+    return response()->json($orders);
   }
 }
