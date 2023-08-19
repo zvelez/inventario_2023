@@ -112,4 +112,33 @@ class OrderentryController extends Controller {
   }
 
   function delete($id) {}
+
+  function receive($id) {
+    $data = [];
+    $data['order'] = Orderentry::with(['supplies', 'supplier'])->find($id);
+    return Inertia::render('Orderentry/Receive', $data);
+  }
+
+  function pickup(Request $request, $id) {
+    $request->validate([
+      'deliverydate' => 'required|date',
+      'deliverydoc' => 'nullable|mimes:png,jpg,jpeg,pdf|max:2048',
+      'deliveryref' => 'nullable|string|max:255',
+      'deliverynote' => 'nullable|string',
+    ]);
+
+    $doc_path = $request->deliverydoc->store('documents/order-entries');
+
+    $order = Orderentry::find($id);
+    $order->deliverydate = $request->deliverydate;
+    $order->deliverynote = $request->deliverynote;
+    $order->deliveryref = $request->deliveryref;
+    $order->deliverydoc = $doc_path;
+    $order->save();
+
+    $supplier = Supplier::find($order->supplier_id);
+
+    return redirect()->route('orders')
+                    ->with('message', 'Recepción a <'. $supplier->name. ' en fecha ' .$order->date .'> registrada correctamente.');
+  }
 }

@@ -64,7 +64,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::post('/orders/{oid}/add', [SupplyController::class, 'store']);
   Route::get('/orders/{id}/edit', [OrderentryController::class, 'update'])->name('orders.update');
   Route::put('/orders/{id}/edit', [OrderentryController::class, 'edit']);
+  Route::get('/orders/{oid}/receive', [OrderentryController::class, 'receive'])->name('orders.receive');
+  Route::post('/orders/{oid}/receive', [OrderentryController::class, 'pickup']);
   Route::delete('/orders/{id}', [OrderentryController::class, 'delete']);
+
+  Route::get('/supplies', [SupplyController::class, 'index'])->name('supplies');
+  Route::get('/supplies/create', [SupplyController::class, 'create'])->name('supplies.create');
+  Route::post('/supplies/create', [SupplyController::class, 'store']);
+  Route::get('/supplies/{id}/edit', [SupplyController::class, 'update'])->name('supplies.update');
+  Route::put('/supplies/{id}/edit', [SupplyController::class, 'edit']);
+  Route::get('/supplies/{id}/edit', [SupplyController::class, 'receive'])->name('supplies.receive');
+  Route::put('/supplies/{id}/edit', [SupplyController::class, 'pickup']);
+  Route::delete('/supplies/{id}', [SupplyController::class, 'delete']);
 });
 
 require __DIR__.'/auth.php';

@@ -25,20 +25,12 @@ const print = () => {
 <template>
     <Head title="Proveedores" />
     <BreezeAuthenticatedLayout>
-      <div class="py-12">
-          <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-              <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                  <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="d-flex justify-content-between">
-                      <div></div>
-                      <button class="btn btn-success" @click="print"><font-awesome-icon :icon="['fa', 'print']" />Imprimir Orden de Compra</button>
-                    </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
       <template #header>
+        <div class="d-flex justify-content-between">
+          <div></div>
+          <button class="btn btn-success" @click="print"><font-awesome-icon :icon="['fa', 'print']" />Imprimir Orden de Compra</button>
+        </div>
+        
         <div id="printable" class="w-100">
           <div class="d-flex flex-column flex-sm-row justify-content-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detalle de Pedido</h2>

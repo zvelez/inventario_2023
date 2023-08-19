@@ -55,4 +55,21 @@ class SupplyController extends Controller {
     $data['order'] = Orderentry::with('supplier')->find($id);
     return Inertia::render('Supply/Form', $data);
   }
+
+  function receive($id) {
+  }
+
+  function pickup($id, Request $request) {
+    $request->validate([
+      'amount' => 'required|numeric',
+      'unitprice' => 'required|numeric',
+    ]);
+
+    $supply = Supply::find($id);
+    $supply->amount = $request->amount;
+    $supply->unitprice = $request->unitprice;
+    $supply->save();
+
+    return response()->json($supply);
+  }
 }
