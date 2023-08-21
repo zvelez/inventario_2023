@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Supply extends Model {
 
@@ -34,7 +34,7 @@ class Supply extends Model {
     return round(doubleval($this->amount) * doubleval($this->unitprice), 2);
   }
 
-  public function order(): HasMany {
-    return $this->hasMany(Orderentry::class);
+  public function order(): BelongsTo {
+    return $this->belongsTo(Orderentry::class);
   }
 }

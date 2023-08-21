@@ -24,7 +24,6 @@ const statusSelected = async() => {
     const request = await axios.post(url, {status: statusSel.value});
     isLoad.value = true;
     if(request.status === 200) {
-      console.log(request.data);
       orderList.value = request.data;
     }
   }

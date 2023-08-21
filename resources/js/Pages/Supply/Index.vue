@@ -36,25 +36,33 @@ onMounted(() => {
           <table class="table table-hover table-striped">
             <thead>
               <tr>
-                <th class="align-middle">Nombre Completo</th>
-                <th class="align-middle">Correo electrónico</th>
-                <th class="align-middle">Dirección</th>
-                <th class="align-middle">Persona de contacto</th>
-                <th class="align-middle">Teléfono</th>
+                <th class="align-middle">Código de Insumo</th>
+                <th class="align-middle">Descripción</th>
+                <th class="align-middle">Marca</th>
+                <th class="align-middle">Precio unitario</th>
+                <th class="align-middle">Stock Inicial</th>
+                <th class="align-middle">Entrada</th>
+                <th class="align-middle">Salida</th>
+                <th class="align-middle">Stock Actual</th>
+                <th class="align-middle">Proveedor</th>
                 <th class="align-middle"></th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="supp in props.supplies">
-                <td class="align-middle">{{ supp.name }}</td>
-                <td class="align-middle">{{ supp.email }}</td>
-                <td class="align-middle">{{ supp.address }}</td>
-                <td class="align-middle">{{ supp.contact }}</td>
-                <td class="align-middle">{{ supp.phone }}</td>
+                <td class="align-middle">{{ supp.code }}</td>
+                <td class="align-middle">{{ supp.description }}</td>
+                <td class="align-middle">{{ supp.brand }}</td>
+                <td class="align-middle text-end">Bs. {{ supp.unitprice }}</td>
+                <td class="align-middle text-end">{{ supp.stock_start }}</td>
+                <td class="align-middle text-end">{{ supp.stock_in }}</td>
+                <td class="align-middle text-end">{{ supp.stock_out }}</td>
+                <td class="align-middle text-end">{{ supp.stock_curr }}</td>
+                <td class="align-middle">{{ supp.suppliers }}</td>
                 <td class="align-middle" style="text-wrap: nowrap !important;">
-                  <Link :href="route('suppliers.update', {id: supp.id})" class="btn btn-warning m-1">
+                  <!--Link :href="route('suppliers.update', {id: supp.id})" class="btn btn-warning m-1">
                     <font-awesome-icon :icon="['fa', 'pen']" />
-                  </Link>
+                  </Link-->
                 </td>
               </tr>
             </tbody>

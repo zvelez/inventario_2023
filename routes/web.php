@@ -54,7 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::put('/suppliers/{id}/edit', [SupplierController::class, 'edit']);
   Route::delete('/suppliers/{id}', [SupplierController::class, 'delete']);
   
-  Route::get('/inventory', [SupplierController::class, 'index'])->name('inventory');
+  Route::get('/inventory', [SupplyController::class, 'index'])->name('inventory');
 
   Route::get('/orders', [OrderentryController::class, 'index'])->name('orders');
   Route::get('/orders/{id}', [OrderentryController::class, 'view'])->name('orders.view');

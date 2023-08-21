@@ -63,7 +63,7 @@ const clickAction = () => {
         <form class="forms-sample" @submit.prevent="submit">
           <div class="form-group">
             <BreezeLabel for="code" class="col-form-label" value="Código" />
-            <BreezeInput id="code" class="form-control" v-model="form.code" required autofocus />
+            <BreezeInput id="code" class="form-control" v-model="form.code" autofocus />
           </div>
           <div class="form-group">
             <BreezeLabel for="description" class="col-form-label" value="Descripción" />
