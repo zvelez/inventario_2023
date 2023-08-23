@@ -83,4 +83,14 @@ class ClientController extends Controller {
   }
 
   function delete($id) {}
+
+  function search(Request $request) {
+    $clients = Client::where('fullname', 'like', '%'.$request->text.'%')->get();
+    $response = [];
+    foreach($clients as $cl) {
+      $response[] = ['id' => $cl->id, 'label' => $cl->fullname];
+    }
+
+    return response()->json($response);
+  }
 }

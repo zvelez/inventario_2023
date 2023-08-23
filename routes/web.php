@@ -8,6 +8,9 @@ use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Orderentry\OrderentryController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Supply\SupplyController;
+use App\Http\Controllers\Work\ProductController;
+use App\Http\Controllers\Work\WorkController;
+use App\Http\Controllers\Work\ManufacturerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/clients/{id}/edit', [ClientController::class, 'update'])->name('clients.update');
   Route::put('/clients/{id}/edit', [ClientController::class, 'edit']);
   Route::delete('/clients/{id}', [ClientController::class, 'delete']);
+  Route::post('/clients/search', [ClientController::class, 'search'])->name('clients.search');
 
   Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
   Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
@@ -77,6 +81,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/supplies/{id}/edit', [SupplyController::class, 'receive'])->name('supplies.receive');
   Route::put('/supplies/{id}/edit', [SupplyController::class, 'pickup']);
   Route::delete('/supplies/{id}', [SupplyController::class, 'delete']);
+  
+  Route::get('/work-progress', [WorkController::class, 'index'])->name('work-progress');
+  Route::get('/works/create', [WorkController::class, 'create'])->name('works.create');
+  Route::post('/works/create', [WorkController::class, 'store']);
+  Route::get('/works/{id}/edit', [WorkController::class, 'update'])->name('works.update');
+  Route::put('/works/{id}/edit', [WorkController::class, 'edit']);
+  Route::delete('/works/{id}', [WorkController::class, 'delete']);
+  Route::get('/works/{wid}/add', [ProductController::class, 'create'])->name('works.add');
+  Route::post('/works/{wid}/add', [ProductController::class, 'store']);
+  
+  Route::get('/products', [ProductController::class, 'index'])->name('products');
+  Route::get('/products/{id}/edit', [ProductController::class, 'update'])->name('products.update');
+  Route::put('/products/{id}/edit', [ProductController::class, 'edit']);
+  Route::delete('/products/{id}', [ProductController::class, 'delete']);
+
+  Route::get('/manufacturers', [ManufacturerController::class, 'index'])->name('manufacturers');
+  Route::get('/manufacturers/create', [ManufacturerController::class, 'create'])->name('manufacturers.create');
+  Route::post('/manufacturers/create', [ManufacturerController::class, 'store']);
+  Route::get('/manufacturers/{id}/edit', [ManufacturerController::class, 'update'])->name('manufacturers.update');
+  Route::put('/manufacturers/{id}/edit', [ManufacturerController::class, 'edit']);
+  Route::delete('/manufacturers/{id}', [ManufacturerController::class, 'delete']);
+  Route::post('/manufacturers/search', [ManufacturerController::class, 'search'])->name('manufacturers.search');
 });
 
 require __DIR__.'/auth.php';

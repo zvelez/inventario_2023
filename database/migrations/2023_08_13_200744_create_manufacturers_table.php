@@ -16,7 +16,7 @@ class CreateManufacturersTable extends Migration {
       $table->id();
       $table->string('fullname');
       $table->string('email');
-      $table->tinyInteger('gender')->default(1);
+      $table->string('contact')->nullable();
       $table->string('address')->nullable();
       $table->string('phone')->nullable();
       $table->text('description')->nullable();
