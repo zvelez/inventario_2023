@@ -32,7 +32,7 @@ const print = () => {
         </div>
         
         <div id="printable" class="w-100">
-          <div class="d-flex flex-column flex-sm-row justify-content-between">
+          <div class="d-flex flex-column flex-sm-row justify-content-between" v-if="props.order !== null">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detalle de Pedido</h2>
             <div class="dl-wrapper">
               <dl>
@@ -41,7 +41,7 @@ const print = () => {
               </dl>
             </div>
           </div>
-          <div class="d-flex flex-column flex-sm-row justify-content-between" style="margin-top: 32px;">
+          <div class="d-flex flex-column flex-sm-row justify-content-between" style="margin-top: 32px;" v-if="props.order !== null">
             <div class="dl-wrapper col-12 col-sm-6">
               <h4>Datos del proveedor</h4>
               <dl>
@@ -89,7 +89,7 @@ const print = () => {
               </dl>
             </div>
           </div>
-          <div class="table-responsive" style="margin: 32px auto 42px;">
+          <div class="table-responsive" style="margin: 32px auto 42px;" v-if="props.order !== null">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>

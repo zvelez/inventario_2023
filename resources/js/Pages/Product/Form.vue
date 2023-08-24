@@ -8,8 +8,7 @@ import PartialForm from '../Manufacturer/PartialForm.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 
-import {Treeselect, ASYNC_SEARCH} from 'vue3-treeselect';
-import 'vue3-treeselect/dist/vue3-treeselect.css';
+import SearchInput from '@/Components/SearchInput.vue';
 
 import axios from 'axios';
 
@@ -37,10 +36,14 @@ const workName = 'Trabajo para ' + props.work.client.fullname + ' en fecha ' + m
 
 const buttonLabel = props.product.id !== undefined ? 'Actualizar' : 'Registrar un Producto';
 
+const manufacturerSel = ref(null);
+
 let suppliesList = ref([]);
 let supplySel = ref(null);
 
 const submit = () => {
+  form.manufacturer_id = manufacturerSel.value.id;
+  console.log(form.manufacturer_id, manufacturerSel.value);
   if(props.product.id !== undefined) {
     form.put(route('products.update', {id: props.product.id}));
   }
@@ -49,42 +52,6 @@ const submit = () => {
   }
   form.reset();
 };
-
-const searchClient = ({ action, searchQuery, callback }) => {
-  if (action === ASYNC_SEARCH) {
-    console.log(searchQuery);
-    axios.post(route('manufacturers.search'), {text: searchQuery})
-      .then((res) => {
-        console.log(res.status, res.data)
-        if(res.status === 200) {
-          callback(null, res.data);
-        }
-        else {
-          callback(null, []);
-        }
-      }).catch((error) => {
-        callback(null, []);
-      });
-  }
-}
-
-const searchSupply = ({ action, searchQuery, callback }) => {
-  if (action === ASYNC_SEARCH) {
-    console.log(searchQuery);
-    axios.post(route('supplies.search'), {text: searchQuery})
-      .then((res) => {
-        console.log(res.status, res.data)
-        if(res.status === 200) {
-          callback(null, res.data);
-        }
-        else {
-          callback(null, []);
-        }
-      }).catch((error) => {
-        callback(null, []);
-      });
-  }
-}
 </script>
 
 <template>
@@ -108,7 +75,7 @@ const searchSupply = ({ action, searchQuery, callback }) => {
           <div class="form-group">
             <BreezeLabel for="manufacturer_id" class="col-form-label" value="Taller" />
             <div class="d-flex justify-content-between" v-if="props.product.id === undefined">
-              <Treeselect id="manufacturer_id" :async="true" :load-options="searchClient" v-model="form.manufacturer_id" required />
+              <SearchInput id="manufacturer_id" v-model="manufacturerSel" :url-api="route('manufacturers.search')" required></SearchInput>
               <BreezeButton class="btn btn-success d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#addManufacturer" type="button" 
                     style="width: 34px; height: 34px; margin-left: 15px;">
                 <font-awesome-icon :icon="['fa', 'plus']" />
@@ -161,14 +128,14 @@ const searchSupply = ({ action, searchQuery, callback }) => {
                   </tr>
                   <tr>
                     <td>
-                      <Treeselect :async="true" :load-options="searchSupply" v-model="supplySel"/>
+                      <SearchInput v-model="supplySel" :url-api="route('supplies.search')"></SearchInput>
                     </td>
-                    <td><span v-if="supplySel !== null">{{ supplySel.description }}</span></td>
-                    <td><span v-if="supplySel !== null">{{ supplySel.brand }}</span></td>
+                    <td><span v-if="supplySel !== null">{{ supplySel.data.description }}</span></td>
+                    <td><span v-if="supplySel !== null">{{ supplySel.data.brand }}</span></td>
                     <td>
                       <div class="form-group d-flex justify-content-between align-items-end"  v-if="supplySel !== null">
                         <BreezeInput type="number" class="form-control" v-model="form.amount" step="1" placeholder="cantidad" />
-                        <span>{{ item.unit }}</span>
+                        <span style="padding-left: 4px;">{{ supplySel.data.unit }}</span>
                       </div>
                     </td>
                     <td>

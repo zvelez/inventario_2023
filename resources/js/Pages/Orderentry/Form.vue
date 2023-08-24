@@ -68,7 +68,7 @@ const clickAction = () => {
           </div>
           <div class="form-group">
             <BreezeLabel for="supplier_id" class="col-form-label" value="Proveedor" />
-            <Treeselect id="supplier_id" class="form-control" :options="suppliers" v-model="form.supplier_id" required />
+            <Treeselect id="supplier_id" :options="suppliers" v-model="form.supplier_id" required />
           </div>
           <div class="form-group">
             <BreezeLabel for="solicitantarea" class="col-form-label" value="Área solicitante" />

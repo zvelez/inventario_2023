@@ -61,7 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/inventory', [SupplyController::class, 'index'])->name('inventory');
 
   Route::get('/orders', [OrderentryController::class, 'index'])->name('orders');
-  Route::get('/orders/{id}', [OrderentryController::class, 'view'])->name('orders.view');
+  Route::get('/orders/{id}/view', [OrderentryController::class, 'view'])->name('orders.view');
   Route::get('/orders/create', [OrderentryController::class, 'create'])->name('orders.create');
   Route::post('/orders/create', [OrderentryController::class, 'store']);
   Route::get('/orders/{oid}/add', [SupplyController::class, 'create'])->name('orders.add');
