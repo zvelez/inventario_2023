@@ -6,7 +6,7 @@ import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import PartialForm from '../Manufacturer/PartialForm.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import {Treeselect, ASYNC_SEARCH} from 'vue3-treeselect';
 import 'vue3-treeselect/dist/vue3-treeselect.css';
@@ -26,6 +26,8 @@ const form = useForm({
   amount: props.product.id !== undefined ? props.product.amount : 0,
   unitprice: props.product.id !== undefined ? props.product.unitprice : '0.00',
   manufacturer_id: props.product.id !== undefined ? props.product.manufacturer_id : null,
+  supplies: props.product.id !== undefined ? props.product.supplies : [],
+  op: null,
 });
 
 const titlePage = props.product.id !== undefined ? 
@@ -35,33 +37,54 @@ const workName = 'Trabajo para ' + props.work.client.fullname + ' en fecha ' + m
 
 const buttonLabel = props.product.id !== undefined ? 'Actualizar' : 'Registrar un Producto';
 
+let suppliesList = ref([]);
+let supplySel = ref(null);
+
 const submit = () => {
   if(props.product.id !== undefined) {
     form.put(route('products.update', {id: props.product.id}));
   }
   else {
-    form.post(route('products.create', {wid: props.product.id}));
+    form.post(route('works.add', {wid: props.work.id}));
   }
+  form.reset();
 };
 
 const searchClient = ({ action, searchQuery, callback }) => {
-      if (action === ASYNC_SEARCH) {
-        console.log(searchQuery);
-        axios.post(route('clients.search'), {text: searchQuery})
-          .then((res) => {
-            console.log(res.status, res.data)
-            if(res.status === 200) {
-              callback(null, res.data);
-            }
-            else {
-              callback(null, []);
-            }
-          }).catch((error) => {
-            callback(null, []);
-          });
-        
-      }
-    }
+  if (action === ASYNC_SEARCH) {
+    console.log(searchQuery);
+    axios.post(route('manufacturers.search'), {text: searchQuery})
+      .then((res) => {
+        console.log(res.status, res.data)
+        if(res.status === 200) {
+          callback(null, res.data);
+        }
+        else {
+          callback(null, []);
+        }
+      }).catch((error) => {
+        callback(null, []);
+      });
+  }
+}
+
+const searchSupply = ({ action, searchQuery, callback }) => {
+  if (action === ASYNC_SEARCH) {
+    console.log(searchQuery);
+    axios.post(route('supplies.search'), {text: searchQuery})
+      .then((res) => {
+        console.log(res.status, res.data)
+        if(res.status === 200) {
+          callback(null, res.data);
+        }
+        else {
+          callback(null, []);
+        }
+      }).catch((error) => {
+        callback(null, []);
+      });
+  }
+}
 </script>
 
 <template>
@@ -85,9 +108,9 @@ const searchClient = ({ action, searchQuery, callback }) => {
           <div class="form-group">
             <BreezeLabel for="manufacturer_id" class="col-form-label" value="Taller" />
             <div class="d-flex justify-content-between" v-if="props.product.id === undefined">
-              <Treeselect id="manufacturer_id" class="form-control" :async="true" :load-options="searchClient" v-model="form.manufacturer_id" required />
+              <Treeselect id="manufacturer_id" :async="true" :load-options="searchClient" v-model="form.manufacturer_id" required />
               <BreezeButton class="btn btn-success d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#addManufacturer" type="button" 
-                    style="width: 52px; height: 52px; margin-left: 15px;">
+                    style="width: 34px; height: 34px; margin-left: 15px;">
                 <font-awesome-icon :icon="['fa', 'plus']" />
               </BreezeButton>
             </div>
@@ -109,11 +132,60 @@ const searchClient = ({ action, searchQuery, callback }) => {
             <BreezeLabel for="unitprice" class="col-form-label" value="Precio unitario" />
             <BreezeInput id="unitprice" type="number" class="form-control" v-model="form.unitprice" step=".01" required />
           </div>
+          <div class="supplies-wrapper">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <th>Código</th>
+                  <th>Descripción</th>
+                  <th>Marca</th>
+                  <th>Cantidad</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr v-for="item in form.supplies">
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.brand }}</td>
+                    <td>
+                      <div class="form-group d-flex justify-content-between align-items-end">
+                        <BreezeInput type="number" class="form-control" v-model="form.amount" step="1" placeholder="cantidad" />
+                        <span>{{ item.unit }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <BreezeButton type="button" class="btn btn-primary d-flex justify-content-center align-items-center" @click="addItem">
+                        <font-awesome-icon :icon="['fa', 'plus']" />
+                      </BreezeButton>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Treeselect :async="true" :load-options="searchSupply" v-model="supplySel"/>
+                    </td>
+                    <td><span v-if="supplySel !== null">{{ supplySel.description }}</span></td>
+                    <td><span v-if="supplySel !== null">{{ supplySel.brand }}</span></td>
+                    <td>
+                      <div class="form-group d-flex justify-content-between align-items-end"  v-if="supplySel !== null">
+                        <BreezeInput type="number" class="form-control" v-model="form.amount" step="1" placeholder="cantidad" />
+                        <span>{{ item.unit }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <BreezeButton type="button" class="btn btn-primary d-flex justify-content-center align-items-center" @click="addItem">
+                        <font-awesome-icon :icon="['fa', 'plus']" />
+                      </BreezeButton>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
           <div class="d-flex justify-content-between m-2">
             <Link :href="route('work-progress')" class="btn btn-link">Cancelar</Link>
             <div class="d-flex">
-              <BreezeButton class="btn btn-success" @click="form.op='end'" v-if="props.work.id === undefined">Finalizar</BreezeButton>
+              <BreezeButton class="btn btn-success" @click="form.op='end'" v-if="props.product.id === undefined">Finalizar</BreezeButton>
               <BreezeButton class="btn btn-primary" @click="form.op='next'">{{ buttonLabel }}</BreezeButton>
             </div>
           </div>

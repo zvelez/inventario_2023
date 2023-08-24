@@ -117,4 +117,15 @@ class SupplyController extends Controller {
     }
     return $suppText;
   }
+
+  public function search(Request $request) {
+    $supplies = Supply::where('code', 'like', '%'.$request->text.'%')->orWhere('brand', 'like', '%'.$request->text.'%')
+          ->orWhere('description', 'like', '%'.$request->text.'%')->get();
+    $response = [];
+    foreach($supplies as $supply) {
+      $response[] = ['id' => $supply->id, 'label' => $supply->code, 'data' => $supply];
+    }
+
+    return response()->json($response);
+  }
 }

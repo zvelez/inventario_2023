@@ -81,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/supplies/{id}/edit', [SupplyController::class, 'receive'])->name('supplies.receive');
   Route::put('/supplies/{id}/edit', [SupplyController::class, 'pickup']);
   Route::delete('/supplies/{id}', [SupplyController::class, 'delete']);
+  Route::post('/supplies/search', [SupplyController::class, 'search'])->name('supplies.search');
   
   Route::get('/work-progress', [WorkController::class, 'index'])->name('work-progress');
   Route::get('/works/create', [WorkController::class, 'create'])->name('works.create');

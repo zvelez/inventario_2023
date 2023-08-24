@@ -31,13 +31,27 @@ const submit = () => {
   }
   else {
     form.post(route('manufacturers.create'));
-    const modalElement = document.getElementById('addManufacturer');
-    if(modalElement !== null) {
-      const modal = Modal.getOrCreateInstance(modalElement);  
-      modal.show();
-    }
+    closeModal();
   }
 };
+
+const cancelForm = () => {
+  const modalElement = document.getElementById('addManufacturer');
+  if(modalElement !== null) {
+    closeModal();
+  }
+  else {
+    window.location.href = route('products');
+  }
+}
+
+const closeModal = () => {
+  const modalElement = document.getElementById('addManufacturer');
+  if(modalElement !== null) {
+    const modal = Modal.getOrCreateInstance(modalElement);
+    modal.hide();
+  }
+}
 </script>
 
 <template>
@@ -76,7 +90,7 @@ const submit = () => {
     </div>
 
     <div class="d-flex justify-content-between m-2">
-      <Link :href="route('users')" class="btn btn-link">Cancelar</Link>
+      <BreezeButton type="button" class="btn btn-secondary" @click="cancelForm">Cancelar</BreezeButton>
       <BreezeButton class="btn btn-primary">{{ buttonLabel }}</BreezeButton>
     </div>
   </form>

@@ -36,9 +36,41 @@ class ProductController extends Controller {
       'unitprice' => $request->unitprice,
     ]);
 
-    $work = Work::with(['supplier'])->find($wid);
+    $work = Work::with(['client'])->find($wid);
 
-    $redirect = $request->op==='end' ? redirect()->route('orders') : back();
-    return $redirect->with('message', 'Producto <'. $product->code .'> registrado correctamente al Trabajo de <'. $work->supplier->name . ' en fecha ' . $work->deadline .'>.');
+    $redirect = $request->op==='end' ? redirect()->route('work-progress') : back();
+    return $redirect->with('message', 'Producto <'. $product->code .'> registrado correctamente al Trabajo de <'. $work->client->fullname . ' en fecha ' . $work->deadline .'>.');
+  }
+  
+  function update($id) {
+    $data = [];
+    $data['product'] = Product::with(['supplies'])->find($id);
+    $data['work'] = Work::with(['client'])->find($data['product']->work_id);
+    return Inertia::render('Product/Form', $data);
+  }
+
+  function edit(Request $request, $wid) {
+    $request->validate([
+      'code' => 'required|string|max:255',
+      'name' => 'required|string|max:255',
+      'amount' => 'required|numeric',
+      'unitprice' => 'required|numeric',
+      'manufacturer_id' => 'required',
+      'op' => 'required',
+    ]);
+
+    $product = Product::create([
+      'manufacturer_id' => $request->manufacturer_id,
+      'work_id' => $wid,
+      'code' => $request->code,
+      'name' => $request->name,
+      'amount' => $request->amount,
+      'unitprice' => $request->unitprice,
+    ]);
+
+    $work = Work::with(['client'])->find($wid);
+
+    $redirect = $request->op==='end' ? redirect()->route('work-progress') : back();
+    return $redirect->with('message', 'Producto <'. $product->code .'> registrado correctamente al Trabajo de <'. $work->client->fullname . ' en fecha ' . $work->deadline .'>.');
   }
 }
