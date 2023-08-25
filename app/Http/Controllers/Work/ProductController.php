@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Work;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductAssigned;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,6 +36,14 @@ class ProductController extends Controller {
       'amount' => $request->amount,
       'unitprice' => $request->unitprice,
     ]);
+
+    foreach($request->supplies as $supp) {
+      ProductAssigned::create([
+        'product_id' => $product->id,
+        'supply_id' => $supp['id'],
+        'amount' => $supp['amount'],
+      ]);
+    }
 
     $work = Work::with(['client'])->find($wid);
 

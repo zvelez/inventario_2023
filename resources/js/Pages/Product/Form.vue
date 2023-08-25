@@ -1,57 +1,89 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import BreezeButton from '@/Components/Button.vue';
-import BreezeInput from '@/Components/Input.vue';
-import BreezeLabel from '@/Components/Label.vue';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import PartialForm from '../Manufacturer/PartialForm.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, ref } from 'vue';
+  import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+  import BreezeButton from '@/Components/Button.vue';
+  import BreezeInput from '@/Components/Input.vue';
+  import BreezeLabel from '@/Components/Label.vue';
+  import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+  import PartialForm from '../Manufacturer/PartialForm.vue';
+  import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+  import { onMounted, ref } from 'vue';
 
-import SearchInput from '@/Components/SearchInput.vue';
+  import SearchInput from '@/Components/SearchInput.vue';
 
-import axios from 'axios';
+  import axios from 'axios';
 
-import moment from 'moment';
+  import moment from 'moment';
 
-const props = defineProps({
-  product: Object,
-  work: Object,
-});
+  const props = defineProps({
+    product: Object,
+    work: Object,
+  });
 
-const form = useForm({
-  code: props.product.id !== undefined ? props.product.code : '',
-  name: props.product.id !== undefined ? props.product.name : '',
-  amount: props.product.id !== undefined ? props.product.amount : 0,
-  unitprice: props.product.id !== undefined ? props.product.unitprice : '0.00',
-  manufacturer_id: props.product.id !== undefined ? props.product.manufacturer_id : null,
-  supplies: props.product.id !== undefined ? props.product.supplies : [],
-  op: null,
-});
+  const form = useForm({
+    code: props.product.id !== undefined ? props.product.code : '',
+    name: props.product.id !== undefined ? props.product.name : '',
+    amount: props.product.id !== undefined ? props.product.amount : 0,
+    unitprice: props.product.id !== undefined ? props.product.unitprice : '0.00',
+    manufacturer_id: props.product.id !== undefined ? props.product.manufacturer_id : null,
+    supplies: props.product.id !== undefined ? props.product.supplies : [],
+    op: null,
+  });
 
-const titlePage = props.product.id !== undefined ? 
-                    'Actualizar los datos del producto ' + props.product.code : 
-                    'Registrar nuevo Producto';
-const workName = 'Trabajo para ' + props.work.client.fullname + ' en fecha ' + moment(props.work.created_at).format('DD/MM/YYYY');
+  const titlePage = props.product.id !== undefined ? 
+                      'Actualizar los datos del producto ' + props.product.code : 
+                      'Registrar nuevo Producto';
+  const workName = 'Trabajo para ' + props.work.client.fullname + ' en fecha ' + moment(props.work.created_at).format('DD/MM/YYYY');
 
-const buttonLabel = props.product.id !== undefined ? 'Actualizar' : 'Registrar un Producto';
+  const buttonLabel = props.product.id !== undefined ? 'Actualizar' : 'Registrar un Producto';
 
-const manufacturerSel = ref(null);
+  const manufacturerSel = ref(null);
 
-let suppliesList = ref([]);
-let supplySel = ref(null);
+  let suppliesList = ref(form.supplies);
+  let supplySel = ref(null);
 
-const submit = () => {
-  form.manufacturer_id = manufacturerSel.value.id;
-  console.log(form.manufacturer_id, manufacturerSel.value);
-  if(props.product.id !== undefined) {
-    form.put(route('products.update', {id: props.product.id}));
-  }
-  else {
-    form.post(route('works.add', {wid: props.work.id}));
-  }
-  form.reset();
-};
+  let searchComp = ref(null);
+
+  const submit = () => {
+    form.manufacturer_id = manufacturerSel.value.id;
+    form.supplies = suppliesList.value;
+    console.log(form.manufacturer_id, manufacturerSel.value, form.supplies);
+    if(props.product.id !== undefined) {
+      form.put(route('products.update', {id: props.product.id}));
+    }
+    else {
+      form.post(route('works.add', {wid: props.work.id}));
+    }
+    form.reset();
+    searchComp.value.cleanData();
+  };
+
+  const addItem = () => {
+    console.log(props.product);
+    if(props.product.id === undefined) {
+      addItemCreate();
+    }
+    else {
+      addItemUpdate();
+    }
+  };
+
+  const addItemCreate = () => {
+    const valueD = Object.assign({}, supplySel.value.data);
+    console.log(supplySel.value, valueD);
+    suppliesList.value.push({
+      id: valueD.id,
+      code: valueD.code,
+      description: valueD.description,
+      brand: valueD.brand,
+      unit: valueD.unit,
+      amount: valueD.amount,
+    });
+    supplySel.value = null;
+    searchComp.value.cleanData();
+  };
+
+  const addItemUpdate = () => {
+  };
 </script>
 
 <template>
@@ -110,13 +142,13 @@ const submit = () => {
                   <th></th>
                 </thead>
                 <tbody>
-                  <tr v-for="item in form.supplies">
+                  <tr v-for="item in suppliesList">
                     <td>{{ item.code }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.brand }}</td>
                     <td>
                       <div class="form-group d-flex justify-content-between align-items-end">
-                        <BreezeInput type="number" class="form-control" v-model="form.amount" step="1" placeholder="cantidad" />
+                        <BreezeInput type="number" class="form-control" v-model="item.amount" step="1" placeholder="cantidad" />
                         <span>{{ item.unit }}</span>
                       </div>
                     </td>
@@ -128,13 +160,13 @@ const submit = () => {
                   </tr>
                   <tr>
                     <td>
-                      <SearchInput v-model="supplySel" :url-api="route('supplies.search')"></SearchInput>
+                      <SearchInput ref="searchComp" v-model="supplySel" :url-api="route('supplies.search')"></SearchInput>
                     </td>
                     <td><span v-if="supplySel !== null">{{ supplySel.data.description }}</span></td>
                     <td><span v-if="supplySel !== null">{{ supplySel.data.brand }}</span></td>
                     <td>
                       <div class="form-group d-flex justify-content-between align-items-end"  v-if="supplySel !== null">
-                        <BreezeInput type="number" class="form-control" v-model="form.amount" step="1" placeholder="cantidad" />
+                        <BreezeInput type="number" class="form-control" v-model="supplySel.data.amount" step="1" placeholder="cantidad" />
                         <span style="padding-left: 4px;">{{ supplySel.data.unit }}</span>
                       </div>
                     </td>

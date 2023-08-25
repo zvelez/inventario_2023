@@ -36,6 +36,16 @@ import { ref } from 'vue';
     isLoad.value = false;
     emit('update:modelValue', item);
   }
+  
+  function cleanData() {
+    resultList.value = [];
+    textSearch.value = '';
+    isLoad.value = false;
+  }
+
+  defineExpose({
+    cleanData
+  });
 </script>
 <template>
   <div class="search-wrapper">
