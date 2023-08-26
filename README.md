@@ -64,12 +64,28 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Estructura
-* Módulo de Autentificación (Login)
-* Módulo Usuarios
-* Módulo de Clientes
-* Módulo de Proveedores 
-* Módulo de Inventario
-* Módulo de Pedidos
-* Módulo de Trabajos en Curso
-* Módulo de Entregas
-* Módulo de Reportes
+1.  Módulo de Autentificación (Login).  
+    Este módulo sirve para validar que un usuario tenga los accesos y privilegios en el sistema.
+2.  Módulo Usuarios.  
+    Este módulo permitirá administrar las Altas, Baja y Modificaciones (ABM) de usuarios del sistema.
+3.  Módulo de Clientes.  
+    Este módulo permitirá administrar las ABM de los clientes que tiene relación con la empresa Kaytumpi y con los cuales se relacionan los pedidos o despacho de prendas.
+4.  Módulo trabajadores asociados.  
+    Este módulo permitirá administrar las ABM de los talleres o tejedoras con los cuales se realizan trabajos de elaboración de prendas y que recibe insumos de la empresa Kaytumpi para atender los pedidos de los clientes.
+5.  Módulo de Proveedores.  
+    Este módulo permitirá administrar las ABM de los proveedores de materiales o insumos que se necesitan para la elaboración de prendas.
+6.  Módulo de Inventario.  
+    Este es el módulo principal del sistema que permite acceso a los demás módulos para poder navegar por el sistema, para recibir pedidos, despachar pedidos, materiales, talleres, etc.
+7.  Módulo de Pedidos.  
+    Este módulo permite introducir los pedidos que ingresan a la empresa Kaytumpi.
+8.  Módulo de Trabajos en Curso.  
+    Este módulo permite hacer un seguimiento sobre los pedidos de los clientes y ver el estado de cada pedido con respecto de los talleres.
+9.  Módulo de Entregas.  
+    Este módulo permite registrar las entregas de material y/o prendas hacia o desde los talleres
+10.  Módulo de Reportes.  
+    Este módulo permite generar reportes de:
+  * Materia prima en stock
+  * Cantidad de pedidos de clientes y fechas de despacho
+  * Cantidad de Talleres con trabajos
+  * Detalle de Talleres con material entregado
+  * Detalle de despacho de mercaderas

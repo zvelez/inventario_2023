@@ -41,7 +41,7 @@ const cancelForm = () => {
     closeModal();
   }
   else {
-    window.location.href = route('products');
+    window.location.href = route('manufacturers');
   }
 }
 

@@ -104,6 +104,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::put('/manufacturers/{id}/edit', [ManufacturerController::class, 'edit']);
   Route::delete('/manufacturers/{id}', [ManufacturerController::class, 'delete']);
   Route::post('/manufacturers/search', [ManufacturerController::class, 'search'])->name('manufacturers.search');
+
+  Route::get('/deliveries', [WorkController::class, 'index'])->name('deliveries');
+
+  Route::get('/reports', [WorkController::class, 'index'])->name('reports');
 });
 
 require __DIR__.'/auth.php';
