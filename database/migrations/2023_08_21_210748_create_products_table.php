@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration {
       $table->unsignedBigInteger('work_id')->unsigned();
       $table->string('code');
       $table->string('name');
-      $table->string('amount');
-      $table->string('unitprice');
+      $table->decimal('amount');
+      $table->decimal('unitprice');
       $table->foreign('manufacturer_id')->references('id')->on('manufacturers');
       $table->foreign('work_id')->references('id')->on('works');
       $table->timestamps();

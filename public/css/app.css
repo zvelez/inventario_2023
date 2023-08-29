@@ -282,18 +282,6 @@ button {
   margin: 0;
 }
 
-.loading-animate {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 24px;
-  height: 24px;
-  animation: rotating 1s linear infinite;
-}
-.loading-animate .fa-spinner {
-  color: #0d6efd;
-}
-
 .brand-logo .logo-app {
   height: 64px !important;
 }
@@ -307,6 +295,46 @@ button {
   border: 1px solid rgb(125, 105, 255);
 }
 
+.work-status {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  display: inline-block;
+  margin: auto;
+  text-align: center;
+  border: 1px solid #d7d7d7;
+}
+.work-status.start {
+  background-color: #f4f5f7;
+}
+.work-status.production {
+  background-color: #6693b0;
+  color: white;
+}
+.work-status.test {
+  background-color: #cc3300;
+  color: white;
+}
+.work-status.deliverable {
+  background-color: #ffd257;
+}
+.work-status.delivered {
+  background-color: #51a825;
+  color: white;
+}
+
+.loading-animate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  animation: rotating 1s linear infinite;
+}
+.loading-animate .fa-spinner {
+  color: #0d6efd;
+}
+
 @keyframes rotating {
   from {
     transform: rotate(0deg);
@@ -314,4 +342,19 @@ button {
   to {
     transform: rotate(360deg);
   }
+}
+.preview-page .client-name {
+  border-bottom: 1px solid #d7d7d7;
+}
+.preview-page .client-name .date {
+  color: #6693b0;
+}
+.preview-page .f-label {
+  font-size: 0.72rem;
+  color: rgba(0, 0, 0, 0.5);
+  padding-top: 6px;
+  font-weight: 500;
+}
+.preview-page .f-data {
+  font-weight: bold;
 }

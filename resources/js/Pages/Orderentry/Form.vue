@@ -60,46 +60,45 @@ const clickAction = () => {
       <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
         {{ status }}
       </div>
-      <button @click="clickAction">Probando</button>
-        <form class="forms-sample" @submit.prevent="submit">
-          <div class="form-group">
-            <BreezeLabel for="date" class="col-form-label" value="Fecha" @click="clickAction"/>
-            <BreezeInput id="date" type="date" class="form-control" v-model="form.date" required autofocus />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="supplier_id" class="col-form-label" value="Proveedor" />
-            <Treeselect id="supplier_id" :options="suppliers" v-model="form.supplier_id" required />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="solicitantarea" class="col-form-label" value="Área solicitante" />
-            <BreezeInput id="solicitantarea" class="form-control" v-model="form.solicitantarea" required autocomplete="solicitantarea" />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="solicitantmanager" class="col-form-label" value="Gerente solicitante" />
-            <BreezeInput id="solicitantmanager" class="form-control" v-model="form.solicitantmanager" required />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="solicitantdate" class="col-form-label" value="Fecha de solicitud" />
-            <BreezeInput id="solicitantdate" type="date" class="form-control" v-model="form.solicitantdate" required />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="deliveryaddress" class="col-form-label" value="Dirección de entrega" />
-            <BreezeInput id="deliveryaddress" class="form-control" v-model="form.deliveryaddress" required />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="deliveryreceptionist" class="col-form-label" value="Responsable de recepción" />
-            <BreezeInput id="deliveryreceptionist" class="form-control" v-model="form.deliveryreceptionist" required />
-          </div>
-          <div class="form-group">
-            <BreezeLabel for="estimateddeliverydate" class="col-form-label" value="Fecha estimada de entrega" />
-            <BreezeInput id="estimateddeliverydate" type="date" class="form-control" v-model="form.estimateddeliverydate" required />
-          </div>
+      <form class="forms-sample" @submit.prevent="submit">
+        <div class="form-group">
+          <BreezeLabel for="date" class="col-form-label" value="Fecha"/>
+          <BreezeInput id="date" type="date" class="form-control" v-model="form.date" required autofocus />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="supplier_id" class="col-form-label" value="Proveedor" />
+          <Treeselect id="supplier_id" :options="suppliers" v-model="form.supplier_id" required />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="solicitantarea" class="col-form-label" value="Área solicitante" />
+          <BreezeInput id="solicitantarea" class="form-control" v-model="form.solicitantarea" required autocomplete="solicitantarea" />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="solicitantmanager" class="col-form-label" value="Gerente solicitante" />
+          <BreezeInput id="solicitantmanager" class="form-control" v-model="form.solicitantmanager" required />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="solicitantdate" class="col-form-label" value="Fecha de solicitud" />
+          <BreezeInput id="solicitantdate" type="date" class="form-control" v-model="form.solicitantdate" required />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="deliveryaddress" class="col-form-label" value="Dirección de entrega" />
+          <BreezeInput id="deliveryaddress" class="form-control" v-model="form.deliveryaddress" required />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="deliveryreceptionist" class="col-form-label" value="Responsable de recepción" />
+          <BreezeInput id="deliveryreceptionist" class="form-control" v-model="form.deliveryreceptionist" required />
+        </div>
+        <div class="form-group">
+          <BreezeLabel for="estimateddeliverydate" class="col-form-label" value="Fecha estimada de entrega" />
+          <BreezeInput id="estimateddeliverydate" type="date" class="form-control" v-model="form.estimateddeliverydate" required />
+        </div>
 
-          <div class="d-flex justify-content-between m-2">
-            <Link :href="route('users')" class="btn btn-link">Cancelar</Link>
-            <BreezeButton class="btn btn-primary">{{ buttonLabel }}</BreezeButton>
-          </div>
-        </form>
+        <div class="d-flex justify-content-between m-2">
+          <Link :href="route('users')" class="btn btn-link">Cancelar</Link>
+          <BreezeButton class="btn btn-primary">{{ buttonLabel }}</BreezeButton>
+        </div>
+      </form>
     </template>
   </BreezeAuthenticatedLayout>
 </template>

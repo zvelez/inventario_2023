@@ -9,10 +9,19 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class WorkController extends Controller {
+
+  private $status = [
+    'Iniciado',
+    'Producción',
+    'Revisión',
+    'Entregable',
+    'Entregado',
+  ];
   
   function create() {
     $data = [];
     $data['work'] = new Work();
+    $data['status'] = $this->status;
     return Inertia::render('Work/Form', $data);
   }
 
@@ -37,13 +46,22 @@ class WorkController extends Controller {
 
   function index() {
     $data = [];
-    $data['works'] = Work::with(['client'])->get();
+    $data['works'] = Work::with(['client'])->orderBy('deadline', 'DESC')->get();
+    $data['status'] = $this->status;
     return Inertia::render('Work/Index', $data);
+  }
+
+  function view($id) {
+    $data = [];
+    $data['work'] = Work::with(['client', 'deliveries', 'comments', 'products', 'products.supplies', 'products.manufacturer'])->find($id);
+    //dd($data['work']->toArray());
+    return Inertia::render('Work/View', $data);
   }
   
   function update($id) {
     $data = [];
     $data['work'] = Work::with(['client'])->find($id);
+    $data['status'] = $this->status;
     return Inertia::render('Work/Form', $data);
   }
 
@@ -64,5 +82,19 @@ class WorkController extends Controller {
 
     return redirect()->route('work-progress')
       ->with('message', 'Trabajo <'. $work->created_at .' para el cliente ' . $client->fullname .'> ha actualizado.');
+  }
+
+  function filters(Request $request) {
+    $request->validate([
+      'status' => 'required|string',
+    ]);
+    
+    $orders = Work::orderBy('deadline', 'DESC')->with(['client']);
+    if($request->status != 'Todos') {
+      $orders = $orders->where('status', '=', $request->status);
+    }
+
+    $orders = $orders->get();
+    return response()->json($orders);
   }
 }

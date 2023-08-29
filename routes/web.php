@@ -8,6 +8,7 @@ use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Orderentry\OrderentryController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Supply\SupplyController;
+use App\Http\Controllers\Work\DeliveryController;
 use App\Http\Controllers\Work\ProductController;
 use App\Http\Controllers\Work\WorkController;
 use App\Http\Controllers\Work\ManufacturerController;
@@ -86,11 +87,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/work-progress', [WorkController::class, 'index'])->name('work-progress');
   Route::get('/works/create', [WorkController::class, 'create'])->name('works.create');
   Route::post('/works/create', [WorkController::class, 'store']);
+  Route::get('/works/{id}/view', [WorkController::class, 'view'])->name('works.view');
   Route::get('/works/{id}/edit', [WorkController::class, 'update'])->name('works.update');
   Route::put('/works/{id}/edit', [WorkController::class, 'edit']);
+  Route::post('/works/filters', [WorkController::class, 'filters'])->name('works.filters');
   Route::delete('/works/{id}', [WorkController::class, 'delete']);
   Route::get('/works/{wid}/add', [ProductController::class, 'create'])->name('works.add');
   Route::post('/works/{wid}/add', [ProductController::class, 'store']);
+  
+
+  Route::get('/deliveries', [DeliveryController::class, 'index'])->name('deliveries');
+  Route::get('/works/{wid}/deliveries/create', [DeliveryController::class, 'create'])->name('works.deliveries.create');
+  Route::post('/works/{wid}/deliveries/create', [DeliveryController::class, 'store']);
+  Route::get('/works/{wid}/deliveries/{id}/edit', [DeliveryController::class, 'update'])->name('works.deliveries.update');
+  Route::put('/works/{wid}/deliveries/{id}/edit', [DeliveryController::class, 'edit']);
   
   Route::get('/products', [ProductController::class, 'index'])->name('products');
   Route::get('/products/{id}/edit', [ProductController::class, 'update'])->name('products.update');
@@ -104,8 +114,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::put('/manufacturers/{id}/edit', [ManufacturerController::class, 'edit']);
   Route::delete('/manufacturers/{id}', [ManufacturerController::class, 'delete']);
   Route::post('/manufacturers/search', [ManufacturerController::class, 'search'])->name('manufacturers.search');
-
-  Route::get('/deliveries', [WorkController::class, 'index'])->name('deliveries');
 
   Route::get('/reports', [WorkController::class, 'index'])->name('reports');
 });
