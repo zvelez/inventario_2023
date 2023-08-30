@@ -60,6 +60,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::delete('/suppliers/{id}', [SupplierController::class, 'delete']);
   
   Route::get('/inventory', [SupplyController::class, 'index'])->name('inventory');
+  Route::get('/inventory/entries', [SupplyController::class, 'entries'])->name('inventory.entries');
+  Route::get('/inventory/deliveries', [SupplyController::class, 'deliveries'])->name('inventory.deliveries');
 
   Route::get('/orders', [OrderentryController::class, 'index'])->name('orders');
   Route::get('/orders/{id}/view', [OrderentryController::class, 'view'])->name('orders.view');
@@ -79,8 +81,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::post('/supplies/create', [SupplyController::class, 'store']);
   Route::get('/supplies/{id}/edit', [SupplyController::class, 'update'])->name('supplies.update');
   Route::put('/supplies/{id}/edit', [SupplyController::class, 'edit']);
-  Route::get('/supplies/{id}/edit', [SupplyController::class, 'receive'])->name('supplies.receive');
-  Route::put('/supplies/{id}/edit', [SupplyController::class, 'pickup']);
+  Route::get('/supplies/{id}/pickup', [SupplyController::class, 'receive'])->name('supplies.receive');
+  Route::put('/supplies/{id}/pickup', [SupplyController::class, 'pickup']);
   Route::delete('/supplies/{id}', [SupplyController::class, 'delete']);
   Route::post('/supplies/search', [SupplyController::class, 'search'])->name('supplies.search');
   

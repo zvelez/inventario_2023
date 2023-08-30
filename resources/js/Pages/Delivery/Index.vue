@@ -38,19 +38,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Trabajos en curso" />
+    <Head title="Entregas" />
     <BreezeAuthenticatedLayout>
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Trabajos en curso
+          Entregas
         </h2>
         <div class="d-flex justify-content-between">
-          <div class="form-group">
-            <select class='form-control' v-model='statusSel' @click="statusSelected">
-              <option value='Todos'>- Todos -</option>
-              <option v-for="st in props.status" :value='st'>{{ st }}</option>
-            </select>
-          </div>
+          <div></div>
           <Link class="btn btn-primary" :href="route('works.create')">Registrar nuevo</Link>
         </div>
         <div v-if="$page.props.flash.message"
@@ -94,6 +89,11 @@ onMounted(() => {
                       </tr>
                     </tbody>
                   </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <a class="btn btn-link" :href="route('works.deliveries.create', {wid: work.id})">
+                    <font-awesome-icon :icon="['fa', 'plus']" /> <small>Registro de actividad</small>
+                  </a>
                 </div>
               </div>
             </div>

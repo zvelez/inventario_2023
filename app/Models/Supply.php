@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Supply extends Model {
 
@@ -35,6 +36,10 @@ class Supply extends Model {
   }
 
   public function order(): BelongsTo {
-    return $this->belongsTo(Orderentry::class);
+    return $this->belongsTo(Orderentry::class, 'orderentry_id');
+  }
+
+  public function products(): BelongsToMany {
+    return $this->belongsToMany(Product::class, 'product_assigneds', 'supply_id', 'product_id')->withPivot('amount');
   }
 }

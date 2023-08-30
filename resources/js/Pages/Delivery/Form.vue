@@ -1,19 +1,18 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import BreezeButton from '@/Components/Button.vue';
-import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 import moment from 'moment';
-import Treeselect from 'vue3-treeselect';
 import 'vue3-treeselect/dist/vue3-treeselect.css';
 
 const props = defineProps({
   delivery: Object,
   work: Object,
+  items: Array,
 });
 
 const form = useForm({
@@ -60,8 +59,17 @@ const submit = () => {
       </div>
         <form class="forms-sample" @submit.prevent="submit">
           <div class="form-group">
-            <BreezeLabel for="code" class="col-form-label" value="Código del producto/insumo" />
-            <BreezeInput id="code" class="form-control" v-model="form.code" required autocomplete="code" />
+            <BreezeLabel for="in" class="col-form-label" value="Tipo de entrega" />
+            <select id="in" class="form-control" v-model="form.in" required>
+              <option value="0">Producto</option>
+              <option value="1">Insumo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <BreezeLabel for="code" class="col-form-label" value="Producto/insumo" />
+            <select id="code" class="form-control" v-model="form.code" required>
+              <option v-for="item in items.filter((a) => a.in == form.in)" :value="item.code">{{ item.label }}</option>
+            </select>
           </div>
           <div class="form-group">
             <BreezeLabel for="responsible" class="col-form-label" value="Responsable" />

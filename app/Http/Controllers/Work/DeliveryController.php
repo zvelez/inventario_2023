@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Work;
 
 use App\Http\Controllers\Controller;
 use App\Models\Delivery;
+use App\Models\Product;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,15 @@ class DeliveryController extends Controller {
   function create($id) {
     $data = [];
     $data['delivery'] = new Delivery();
-    $data['work'] = Work::find($id);
+    $data['work'] = Work::with(['products', 'products.supplies'])->find($id);
+    
+    $data['items'] = [];
+    foreach($data['work']->products as $prod) {
+      $data['items'][] = ['label' => $prod->name, 'code' => $prod->code, 'in' => 0];
+      foreach($prod->supplies as $sup) {
+        $data['items'][] = ['label' => $sup->description.' - '. $sup->brand, 'code' => $sup->code, 'in' => 1];
+      }
+    }
     return Inertia::render('Delivery/Form', $data);
   }
 
@@ -55,7 +64,7 @@ class DeliveryController extends Controller {
   function index() {
     $data = [];
     $data['works'] = Work::with(['client', 'deliveries', 'comments', 'products', 'products.supplies', 'products.manufacturer'])
-          ->whereIn('status', [0, 1, 2])->get();
+          ->whereIn('status', [0, 1, 2])->orderBy('deadline', 'ASC')->get();
     //dd($data['work']->toArray());
     return Inertia::render('Delivery/Index', $data);
   } 
