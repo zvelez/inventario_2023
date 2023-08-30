@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder {
       OrderentryTableSeeder::class,
       SupplyTableSeeder::class,
       WorkTableSeeder::class,
-      /*ProductTableSeeder::class,
+      ProductTableSeeder::class,
       ProductAssignedTableSeeder::class,
-      DeliveryTableSeeder::class,*/
+      DeliveryTableSeeder::class,
     ]);
   }
 }

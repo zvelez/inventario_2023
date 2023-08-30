@@ -19,7 +19,7 @@ onMounted(() => {
     <BreezeAuthenticatedLayout>
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Clientes
+          Talleres
         </h2>
         <div class="d-flex justify-content-between">
           <div></div>

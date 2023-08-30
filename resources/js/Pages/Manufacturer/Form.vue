@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <Head title="Clientes" />
+  <Head title="Taller" />
   <BreezeAuthenticatedLayout>
     <template #header>
       <PartialForm :manufacturer="manufacturer"></PartialForm>
