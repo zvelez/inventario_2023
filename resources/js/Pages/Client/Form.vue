@@ -26,8 +26,6 @@ const titlePage = props.client.id !== undefined ?
 
 const buttonLabel = props.client.id !== undefined ? 'Actualizar' : 'Registrar';
 
-const states = ['La Paz', 'Chuquisaca', 'Cochabamba', 'Santa Cruz', 'Oruro', 'Potosí', 'Tarija', 'Beni', 'Pando'];
-
 const submit = () => {
   if(props.client.id !== undefined) {
     form.put(route('clients.update', {id: props.client.id}));
@@ -72,11 +70,8 @@ const clickAction = () => {
           
           <div class="d-flex flex-wrap w-100 justify-content-between">
             <div class="form-group col-12 col-sm-5">
-              <BreezeLabel for="state" class="col-form-label" value="Departamento" />
-              <select id="state" class='form-control' v-model='form.state' required>
-                <option value='0' >- Selecciona un departamento -</option>
-                <option v-for='data in states' :value='data'>{{ data }}</option>
-              </select>
+              <BreezeLabel for="state" class="col-form-label" value="Estado" />
+              <BreezeInput id="state" class="form-control" v-model="form.state" required />
             </div>
             <div class="form-group col-12 col-sm-5">
               <BreezeLabel for="city" class="col-form-label" value="Ciudad" />
