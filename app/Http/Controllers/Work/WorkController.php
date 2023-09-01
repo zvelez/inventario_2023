@@ -21,7 +21,7 @@ class WorkController extends Controller {
   function create() {
     $data = [];
     $data['work'] = new Work();
-    $data['status'] = $this->status;
+    $data['statuslist'] = $this->status;
     return Inertia::render('Work/Form', $data);
   }
 
@@ -47,7 +47,7 @@ class WorkController extends Controller {
   function index() {
     $data = [];
     $data['works'] = Work::with(['client'])->orderBy('deadline', 'DESC')->get();
-    $data['status'] = $this->status;
+    $data['statuslist'] = $this->status;
     return Inertia::render('Work/Index', $data);
   }
 
@@ -61,7 +61,7 @@ class WorkController extends Controller {
   function update($id) {
     $data = [];
     $data['work'] = Work::with(['client'])->find($id);
-    $data['status'] = $this->status;
+    $data['statuslist'] = $this->status;
     return Inertia::render('Work/Form', $data);
   }
 

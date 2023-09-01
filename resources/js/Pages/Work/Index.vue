@@ -8,7 +8,7 @@ import moment from 'moment';
 
 const props = defineProps({
   works: Object,
-  status: Array,
+  statuslist: Array,
 });
 
 let worksList = ref(props.works);
@@ -48,7 +48,7 @@ onMounted(() => {
           <div class="form-group">
             <select class='form-control' v-model='statusSel' @click="statusSelected">
               <option value='Todos'>- Todos -</option>
-              <option v-for="st in props.status" :value='st'>{{ st }}</option>
+              <option v-for="st in props.statuslist" :value='st'>{{ st }}</option>
             </select>
           </div>
           <Link class="btn btn-primary" :href="route('works.create')">Registrar nuevo</Link>

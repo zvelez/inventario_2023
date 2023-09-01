@@ -16,7 +16,7 @@ import moment from 'moment';
 
 const props = defineProps({
   work: Object,
-  status: Array,
+  statuslist: Array,
 });
 
 const form = useForm({
@@ -83,7 +83,7 @@ const searchClient = ({ action, searchQuery, callback }) => {
           <div class="form-group">
             <BreezeLabel for="status" class="col-form-label" value="Estado" />
             <select id="status" class='form-control' v-model='form.status' required>
-              <option v-for="st in props.status" :value='st'>{{ st }}</option>
+              <option v-for="st in props.statuslist" :value='st'>{{ st }}</option>
             </select>
           </div>
           <div class="form-group">

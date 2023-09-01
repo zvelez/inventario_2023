@@ -29,7 +29,7 @@ onMounted(() => {
       </div>
       <div class="d-flex justify-content-between">
         <div></div>
-        <Link class="btn btn-primary" :href="route('suppliers.create')">Registrar nuevo</Link>
+        <Link class="btn btn-primary" :href="route('orders.create')">Registrar Orden</Link>
       </div>
       <div v-if="$page.props.flash.message"
             class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
