@@ -31,7 +31,7 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <BreezeValidationErrors class="mb-4" />
+        <BreezeValidationErrors class="mb-4 pb-1" />
 
         <form @submit.prevent="submit">
             <div class="form-group">

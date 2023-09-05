@@ -29,7 +29,7 @@ const submit = () => {
     <BreezeGuestLayout>
         <Head title="Reestablecer Contraseña" />
 
-        <BreezeValidationErrors class="mb-4" />
+        <BreezeValidationErrors class="mb-4 pb-1" />
 
         <form @submit.prevent="submit">
             <div>

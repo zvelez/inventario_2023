@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Orderentry\OrderentryController;
+use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Supply\SupplyController;
 use App\Http\Controllers\Work\DeliveryController;
@@ -42,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::post('/users/create', [UserController::class, 'store']);
   Route::get('/users/{id}/edit', [UserController::class, 'update'])->name('users.update');
   Route::put('/users/{id}/edit', [UserController::class, 'edit']);
-  Route::delete('/users/{id}', [UserController::class, 'delete']);
+  Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
 
   Route::get('/clients', [ClientController::class, 'index'])->name('clients');
   Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
@@ -117,7 +118,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::delete('/manufacturers/{id}', [ManufacturerController::class, 'delete']);
   Route::post('/manufacturers/search', [ManufacturerController::class, 'search'])->name('manufacturers.search');
 
-  Route::get('/reports', [WorkController::class, 'index'])->name('reports');
+  Route::get('/reports', [ReportController::class, 'main'])->name('reports');
+  Route::get('/reports/material-stock', [ReportController::class, 'raw_material_stock'])->name('reports.raw_material_stock');
+  Route::post('/reports/material-stock', [ReportController::class, 'raw_material_stock_post']);
+  Route::get('/reports/material-stock/download', [ReportController::class, 'raw_material_stock_download'])->name('reports.raw_material_stock.download');
 });
 
 require __DIR__.'/auth.php';

@@ -42,7 +42,7 @@ const submit = () => {
         {{ titlePage }}
       </h2>
 
-      <BreezeValidationErrors class="mb-4" />
+      <BreezeValidationErrors class="mb-4 pb-1" />
 
       <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
         {{ status }}

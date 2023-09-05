@@ -8,11 +8,13 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
   user: Object,
+  roles: Array,
 });
 
 const form = useForm({
     fullname: props.user.id !== undefined ? props.user.fullname : '',
     email: props.user.id !== undefined ? props.user.email : '',
+    role_id: props.user.id !== undefined ? props.user.role_id : 0,
 });
 
 const titlePage = props.user.id !== undefined ? 
@@ -30,9 +32,6 @@ const submit = () => {
   }
 };
 
-const clickAction = () => {
-  console.log(props.user);
-};
 </script>
 
 <template>
@@ -43,20 +42,26 @@ const clickAction = () => {
         {{ titlePage }}
       </h2>
 
-      <BreezeValidationErrors class="mb-4" />
+      <BreezeValidationErrors class="mb-4 pb-1" />
 
       <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
           {{ status }}
       </div>
-      <!--button @click="clickAction">Probando</button-->
         <form class="forms-sample" @submit.prevent="submit">
           <div class="form-group">
-              <BreezeLabel for="fullname" class="col-form-label" value="Nombre Completo" />
-              <BreezeInput id="fullname" type="fullname" class="form-control" v-model="form.fullname" required autofocus />
+            <BreezeLabel for="fullname" class="col-form-label" value="Nombre Completo" />
+            <BreezeInput id="fullname" type="fullname" class="form-control" v-model="form.fullname" required autofocus />
           </div>
           <div class="form-group">
-              <BreezeLabel for="email" class="col-form-label" value="Correo electrónico" />
-              <BreezeInput id="email" type="email" class="form-control" v-model="form.email" required autocomplete="email" />
+            <BreezeLabel for="email" class="col-form-label" value="Correo electrónico" />
+            <BreezeInput id="email" type="email" class="form-control" v-model="form.email" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <BreezeLabel for="role_id" class="col-form-label" value="Rol de usuario" />
+            <select id="role_id" class="form-control" v-model="form.role_id" required>
+              <option value="0">- Seleccione un Rol -</option>
+              <option v-for="role in props.roles" :value="role.id">{{ role.name }}</option>
+            </select>
           </div>
 
           <div class="d-flex justify-content-between m-2">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,17 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $res = $this->checkBlocked($request->email);
+        if($res===TRUE) {
+          //dd($res);
+          $this->destroy($request);
+          return redirect()->back()->withErrors(['BLOCKED' => 'Su cuenta está bloqueada, contáctese con el administrador de sistemas']);
+        }
+        else {
+          $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+          return redirect()->intended(RouteServiceProvider::HOME);
+        }
     }
 
     /**
@@ -55,5 +64,10 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    private function checkBlocked($email) {
+      $user = User::where('email', '=', $email)->first();
+      return $user->status != 1;
     }
 }

@@ -1,3 +1,8 @@
+$color-primary: #010000;
+$color-secondary: #00395f;
+$color-secondary-light: #023470;
+$color-gray: #f2f3f7;
+
 .video-gb {
   position: absolute;
   right: 0;
@@ -55,6 +60,7 @@
 .main-menu {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-left: 2.5rem;
   margin-top: -1px;
   margin-bottom: -1px;
@@ -338,6 +344,65 @@ button {
 
   .fa-spinner {
     color: #0d6efd;
+  }
+}
+
+.reports {
+  min-height: 75vh;
+  
+  .reports-link {
+    position: relative;
+    background-color: white;
+    padding: 20px 15px;
+    margin: 15px 0;
+
+    .report-title {
+      a {
+        color: $color-secondary;
+        font-weight: bold;
+      }
+    }
+
+    &:after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: $color-secondary-light;
+    }
+
+    &:hover {
+      .report-title {
+        a {
+          color: #0074c2;
+        }
+      }
+      &:after {
+        background-color: #0074c2;
+      }
+    }
+  }
+
+  .stock-alert {
+    font-weight: 800;
+
+    &.alert-danger {
+      background-color: red;
+    }
+    &.alert-warning{
+      background-color: rgb(252, 198, 24);
+    }
+    &.alert-success {
+      background-color: yellow;
+    }
+    &.alert-god {
+      background-color: greenyellow;
+    }
+    &.alert-full {
+      background-color: rgb(3, 165, 3);
+    }
   }
 }
 

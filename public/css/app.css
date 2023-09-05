@@ -53,6 +53,7 @@
 .main-menu {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-left: 2.5rem;
   margin-top: -1px;
   margin-bottom: -1px;
@@ -333,6 +334,53 @@ button {
 }
 .loading-animate .fa-spinner {
   color: #0d6efd;
+}
+
+.reports {
+  min-height: 75vh;
+}
+.reports .reports-link {
+  position: relative;
+  background-color: white;
+  padding: 20px 15px;
+  margin: 15px 0;
+}
+.reports .reports-link .report-title a {
+  color: #00395f;
+  font-weight: bold;
+}
+.reports .reports-link:after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #023470;
+}
+.reports .reports-link:hover .report-title a {
+  color: #0074c2;
+}
+.reports .reports-link:hover:after {
+  background-color: #0074c2;
+}
+.reports .stock-alert {
+  font-weight: 800;
+}
+.reports .stock-alert.alert-danger {
+  background-color: red;
+}
+.reports .stock-alert.alert-warning {
+  background-color: rgb(252, 198, 24);
+}
+.reports .stock-alert.alert-success {
+  background-color: yellow;
+}
+.reports .stock-alert.alert-god {
+  background-color: greenyellow;
+}
+.reports .stock-alert.alert-full {
+  background-color: rgb(3, 165, 3);
 }
 
 @keyframes rotating {

@@ -102,22 +102,6 @@ class SupplyController extends Controller {
     return response()->json($supply);
   }
 
-  private function listSuppliers($orders) {
-    $suppIds = [];
-    foreach($orders as $ord) {
-      $suppIds[] = $ord->supplier_id;
-    }
-    $suppliers = Supplier::whereIn('id', $suppIds)->get(); 
-    if(sizeof($orders) > 0) {
-      //dd($suppliers->toArray(), $suppIds, $orders->toArray());
-    }
-    $suppText = [];
-    foreach($suppliers as $suppl) {
-      $suppText[] = $suppl->name;
-    }
-    return $suppText;
-  }
-
   public function entries() {
     $data = [];
     $data['supplies'] = Supply::with(['order', 'order.supplier'])->get();
@@ -146,7 +130,7 @@ class SupplyController extends Controller {
     return response()->json($response);
   }
 
-  private function getQueryEntries($supp) {
+  public function getQueryEntries($supp) {
     $qb = Supply::leftJoin('orderentries', 'orderentries.id', '=', 'supplies.orderentry_id');
     if(!empty($supp)) {
       $qb->where('supplies.code', '=', $supp->code);
@@ -154,7 +138,23 @@ class SupplyController extends Controller {
     return $qb;
   }
 
-  private function getQueryDeliveries($supp) {
+  public function listSuppliers($orders) {
+    $suppIds = [];
+    foreach($orders as $ord) {
+      $suppIds[] = $ord->supplier_id;
+    }
+    $suppliers = Supplier::whereIn('id', $suppIds)->get(); 
+    if(sizeof($orders) > 0) {
+      //dd($suppliers->toArray(), $suppIds, $orders->toArray());
+    }
+    $suppText = [];
+    foreach($suppliers as $suppl) {
+      $suppText[] = $suppl->name;
+    }
+    return $suppText;
+  }
+
+  public function getQueryDeliveries($supp) {
     $qb = Supply::select(['supplies.*', 'product_assigneds.supply_id', 'product_assigneds.product_id', 
                           'product_assigneds.amount', 'product_assigneds.created_at as registered_at', 'works.id as work_id'])
     ->leftJoin('product_assigneds', 'product_assigneds.supply_id', '=', 'supplies.id')
@@ -166,7 +166,7 @@ class SupplyController extends Controller {
     return $qb;
   }
 
-  private function calcOutStock($supp) {
+  public function calcOutStock($supp) {
     $queryBase = $this->getQueryDeliveries($supp);
     //dd($queryBase->get()->toArray());
     return $queryBase->sum('product_assigneds.amount');

@@ -25,7 +25,7 @@ const submit = () => {
             Esta es un área segura de la aplicación. Por favor, confirme su contraseña antes de continuar.
         </div>
 
-        <BreezeValidationErrors class="mb-4" />
+        <BreezeValidationErrors class="mb-4 pb-1" />
 
         <form @submit.prevent="submit">
             <div class="form-group">

@@ -1,5 +1,6 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { onMounted, ref } from "vue";
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import { Modal } from "bootstrap";
@@ -29,7 +30,7 @@ const cancelModal = () => {
 
 const okModal = () => {
   if(userSel.value !== null) {
-    form.delete(route('users.update', {id: userSel.value.id}), {
+    form.delete(route('users.delete', {id: userSel.value.id}), {
       onFinish: () => thisModalObj.hide(),
     });
   }
@@ -48,7 +49,7 @@ const okModal = () => {
               <Link class="btn btn-primary" :href="route('users.create')">Registrar nuevo</Link>
             </div>
             <div v-if="$page.props.flash.message"
-                  class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                  class="p-4 mb-4 mt-2 alert alert-success"
                   role="alert">
                 <span class="font-medium">
                     {{ $page.props.flash.message }}
@@ -60,6 +61,7 @@ const okModal = () => {
                   <tr>
                     <th class="align-middle">Nombre Completo</th>
                     <th class="align-middle">Correo electrónico</th>
+                    <th class="align-middle">Rol de usuario</th>
                     <th class="align-middle"></th>
                   </tr>
                 </thead>
@@ -67,6 +69,7 @@ const okModal = () => {
                   <tr v-for="user in props.users">
                     <td class="align-middle">{{ user.fullname }}</td>
                     <td class="align-middle">{{ user.email }}</td>
+                    <td class="align-middle">{{ user.role.name }}</td>
                     <td class="align-middle" style="text-wrap: nowrap !important;">
                       <Link :href="route('users.update', {id: user.id})" class="btn btn-warning m-1">
                         <font-awesome-icon :icon="['fa', 'pen']" />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\User\RoleController;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -43,7 +44,8 @@ class HandleInertiaRequests extends Middleware
             },
             'flash' => [
                 'message' => session('message')
-            ]
+            ],
+            'menulinks' => RoleController::getMenu(),
         ]);
     }
 }
