@@ -23,7 +23,7 @@ class ProductFactory extends Factory {
       'manufacturer_id' => $manufacturersRand,
       'work_id' => $worksRand,
       'code' => $this->faker->bothify('??????-########'),
-      'name' => $nameRand,
+      'name' => $this->faker->words($nameRand, TRUE),
       'amount' => $this->faker->randomFloat(3, 40, 280),
       'unitprice' => $this->faker->randomFloat(2, 45, 140),
     ];
