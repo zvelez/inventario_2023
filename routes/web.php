@@ -125,6 +125,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/reports/works-and-deadline', [ReportController::class, 'works_and_deadline'])->name('reports.works_and_deadline');
   Route::post('/reports/works-and-deadline', [ReportController::class, 'works_and_deadline_post']);
   Route::get('/reports/works-and-deadline/download', [ReportController::class, 'works_and_deadline_download'])->name('reports.works_and_deadline.download');
+  Route::get('/reports/workshops-with-jobs', [ReportController::class, 'workshops_with_jobs'])->name('reports.workshops_with_jobs');
+  Route::post('/reports/workshops-with-jobs', [ReportController::class, 'workshops_with_jobs_post']);
+  Route::get('/reports/workshops-with-jobs/download', [ReportController::class, 'workshops_with_jobs_download'])->name('reports.workshops_with_jobs.download');
 });
 
 require __DIR__.'/auth.php';
