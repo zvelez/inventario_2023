@@ -97,6 +97,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::delete('/works/{id}', [WorkController::class, 'delete']);
   Route::get('/works/{wid}/add', [ProductController::class, 'create'])->name('works.add');
   Route::post('/works/{wid}/add', [ProductController::class, 'store']);
+  Route::get('/works/{wid}/starting-order', [WorkController::class, 'starting_order'])->name('works.starting_order');
+  Route::post('/works/{wid}/starting-order', [WorkController::class, 'starting_order_save']);
   
 
   Route::get('/deliveries', [DeliveryController::class, 'index'])->name('deliveries');
@@ -128,6 +130,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/reports/workshops-with-jobs', [ReportController::class, 'workshops_with_jobs'])->name('reports.workshops_with_jobs');
   Route::post('/reports/workshops-with-jobs', [ReportController::class, 'workshops_with_jobs_post']);
   Route::get('/reports/workshops-with-jobs/download', [ReportController::class, 'workshops_with_jobs_download'])->name('reports.workshops_with_jobs.download');
+  Route::get('/reports/workshops-delivered-material', [ReportController::class, 'workshops_delivered_material'])->name('reports.workshops_delivered_material');
+  Route::post('/reports/workshops-delivered-material', [ReportController::class, 'workshops_delivered_material_post']);
+  Route::get('/reports/workshops-delivered-material/download', [ReportController::class, 'workshops_delivered_material_download'])->name('reports.workshops_delivered_material.download');
+  Route::get('/reports/merchandise-clearance', [ReportController::class, 'merchandise_clearance'])->name('reports.merchandise_clearance');
+  Route::post('/reports/merchandise-clearance', [ReportController::class, 'merchandise_clearance_post']);
+  Route::get('/reports/merchandise-clearance/download', [ReportController::class, 'merchandise_clearance_download'])->name('reports.merchandise_clearance.download');
 });
 
 require __DIR__.'/auth.php';

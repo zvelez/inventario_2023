@@ -11,7 +11,6 @@
 
   const reports = ref([]);
   const orderSel = ref(0);
-  const selected = ref(props.filters.select[0]);
   console.log(props.filters);
 
   onMounted(() => {
@@ -20,7 +19,7 @@
 
   const loadData = () => {
     reports.value = [];
-    axios.post(route('reports.workshops_with_jobs'), {order: orderSel.value, select: selected.value})
+    axios.post(route('reports.workshops_with_jobs'), {order: orderSel.value})
           .then((res) => {
             reports.value = res.data.reports;
           });
@@ -57,7 +56,7 @@
     <div class="reports">
       <div class="filters d-flex justify-content-between">
         <div class="row p-4">
-          <div class="form-group col-12 col-sm-6">
+          <div class="form-group col-12">
             <BreezeLabel for="code" class="col-form-label" value="Ordenar por" />
             <select id="code" class="form-control" v-model="orderSel" @change="loadData">
               <option v-for="(item, index) in props.filters.order" :value="index">{{ item }}</option>
@@ -73,23 +72,25 @@
           <thead>
             <tr>
               <th class="align-middle">Taller</th>
-              <th class="align-middle text-end">F. primera entrega</th>
-              <th class="align-middle">Fecha plazo de envío</th>
-              <th class="align-middle text-end">Cliente</th>
+              <th class="align-middle text-center">F. 1er suministro</th>
+              <th class="align-middle text-center">F. plazo de envío</th>
+              <th class="align-middle">Cliente</th>
               <th class="align-middle text-end">Cod. Producto</th>
               <th class="align-middle">Producto</th>
-              <th class="align-middle text-end">Cantidad</th>
+              <th class="align-middle text-end">Cant. a trabajar</th>
+              <th class="align-middle text-end">Cant. entregada</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="prod in reports">
               <td class="align-middle">{{ prod.workshop }}</td>
-              <td class="align-middle text-end">{{ prod.first_delivery }}</td>
-              <td class="align-middle text-end">{{ prod.deadline }}</td>
+              <td class="align-middle text-center">{{ prod.first_delivery }}</td>
+              <td class="align-middle text-center">{{ prod.deadline }}</td>
               <td class="align-middle">{{ prod.client }}</td>
               <td class="align-middle text-end">{{ prod.product_code }}</td>
               <td class="align-middle">{{ prod.product_name }}</td>
               <td class="align-middle text-end">{{ prod.product_amount }}</td>
+              <td class="align-middle text-end">{{ prod.delivery_amount }}</td>
             </tr>
           </tbody>
         </table>

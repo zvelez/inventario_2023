@@ -88,4 +88,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
   * Cantidad de pedidos de clientes y fechas de despacho
   * Cantidad de Talleres con trabajos
   * Detalle de Talleres con material entregado
-  * Detalle de despacho de mercaderas
+  * Detalle de despacho de mercaderías

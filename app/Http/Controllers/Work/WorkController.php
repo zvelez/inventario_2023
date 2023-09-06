@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Work;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Startingorder;
 use App\Models\Work;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class WorkController extends Controller {
 
@@ -96,5 +99,32 @@ class WorkController extends Controller {
 
     $orders = $orders->get();
     return response()->json($orders);
+  }
+
+  function starting_order($id) {
+    $data = [];
+    $data['work'] = Work::with(['client', 'deliveries', 'comments', 'products', 'products.supplies', 'products.manufacturer'])->find($id);
+    $data['userfullname'] = Auth::user()->fullname;
+    if($data['work']->status === 'Entregable') {
+      return Inertia::render('Work/StartingOrder', $data);
+    }
+    else {
+      return redirect()->route('works.view', ['id' => $id])
+            ->with('message', 'El trabajo no es <Entregable> todavía, está función no es aplicable todavía.');
+    }
+  }
+
+  function starting_order_save(Request $request, $id) {
+    $order = new Startingorder();
+    $order->work_id = $id;
+    $order->user_id = Auth::id();
+    $order->dispatchdate = Carbon::createFromFormat('d/m/Y H:i', $request->date);
+    $order->receivedby = $request->receivedby;
+    $order->save();
+
+    $work = Work::find($id);
+    $work->status = 'Entregado';
+    $work->save();
+    return ;
   }
 }
