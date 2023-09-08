@@ -34,6 +34,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
+      $gc = $this->checkCaptcha($request->gc);
+      if(!$gc) {
+        $this->destroy($request);
+        return redirect()->back()->withErrors(['BLOCKED' => 'El recaptcha no es válido.']);
+      }
+
         $request->authenticate();
 
         $res = $this->checkBlocked($request->email);
@@ -69,5 +76,12 @@ class AuthenticatedSessionController extends Controller
     private function checkBlocked($email) {
       $user = User::where('email', '=', $email)->first();
       return $user->status != 1;
+    }
+
+    private function checkCaptcha($gc) {
+      $recaptcha_secret = env('RECAPTCHA_SECRET');
+      $response         = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $recaptcha_secret . "&response=" . $gc);
+      $response         = json_decode($response, true);
+      return $response['success'];
     }
 }

@@ -5,6 +5,7 @@ import BreezeGuestLayout from '@/Layouts/Guest.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 defineProps({
@@ -15,13 +16,19 @@ defineProps({
 const form = useForm({
     email: '',
     password: '',
-    remember: false
+    remember: false,
+    gc: null,
 });
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
+
+const submit = async () => {
+  await recaptchaLoaded();
+  const token = await executeRecaptcha('login');
+  form.gc = token;
+  form.post(route('login'), {
+      onFinish: () => form.reset('password'),
+  });
 };
 </script>
 
