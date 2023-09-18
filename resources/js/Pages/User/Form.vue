@@ -56,7 +56,7 @@ const submit = () => {
             <BreezeLabel for="email" class="col-form-label" value="Correo electrónico" />
             <BreezeInput id="email" type="email" class="form-control" v-model="form.email" required autocomplete="email" />
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="props.roles != null">
             <BreezeLabel for="role_id" class="col-form-label" value="Rol de usuario" />
             <select id="role_id" class="form-control" v-model="form.role_id" required>
               <option value="0">- Seleccione un Rol -</option>

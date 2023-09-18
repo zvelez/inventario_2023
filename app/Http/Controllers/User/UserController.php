@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -107,6 +108,37 @@ class UserController extends Controller {
 
     return redirect()->route('users')
                     ->with('message', 'Usuario <'.$user->fullname.'> '.$statusStr.' correctamente.');
+  }
+
+  function profile() {
+    $data = [];
+    $data['user'] = Auth::user();
+    $data['roles'] = null;
+    return Inertia::render('User/Form', $data);
+  }
+
+  function password() {
+    $data = [];
+    $data['user'] = Auth::user();
+    return Inertia::render('User/Password', $data);
+  }
+
+  function password_save(Request $request) {
+    $request->validate([
+      'password' => 'required|string|max:255',
+      'repeat' => 'required|string|max:255',
+    ]);
+
+    if($request->password != $request->repeat) {
+      return back()->withErrors('Las contraseñas no coindiden.');
+    }
+
+    $user = User::find(Auth::id());
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    return redirect()->route('dashboard')
+                    ->with('message', 'La contraseña ha sido actualizada correctamente.');
   }
 
 }

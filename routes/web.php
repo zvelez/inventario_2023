@@ -38,6 +38,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
       return Inertia::render('Dashboard');
   })->name('dashboard');
 
+  Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+  Route::get('/profile/password', [UserController::class, 'password'])->name('profile.password');
+  Route::post('/profile/password', [UserController::class, 'password_save']);
+
   Route::get('/users', [UserController::class, 'index'])->name('users');
   Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
   Route::post('/users/create', [UserController::class, 'store']);

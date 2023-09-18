@@ -43,6 +43,12 @@
                   </template>
 
                   <template #content>
+                    <BreezeDropdownLink :href="route('profile')" as="button">
+                      Editar perfil
+                    </BreezeDropdownLink>
+                    <BreezeDropdownLink :href="route('profile.password')" as="button">
+                      Cambio de contraseña
+                    </BreezeDropdownLink>
                     <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                       Cerrar sesión
                     </BreezeDropdownLink>
