@@ -8,12 +8,15 @@ import { InertiaProgress } from '@inertiajs/progress';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
-import { faChevronDown, faEye, faMagnifyingGlass, faPlus, faPen, faPrint, faSpinner, faTruckArrowRight, faTruckField, faTruckRampBox, faUserCheck, faUserLock } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faClipboardList, faEllipsisVertical, faEye, faMagnifyingGlass, faPlus, faPen, faPrint, faSpinner, faTruckArrowRight, faTruckField, 
+  faTruckRampBox, faUserCheck, faUserLock } from '@fortawesome/free-solid-svg-icons'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 library.add(faChevronDown)
+library.add(faClipboardList)
 library.add(faEye)
+library.add(faEllipsisVertical)
 library.add(faMagnifyingGlass)
 library.add(faPlus)
 library.add(faPen)

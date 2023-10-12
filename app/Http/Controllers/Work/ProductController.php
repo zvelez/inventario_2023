@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Work;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductAssigned;
+use App\Models\Productphoto;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Image;
 
 class ProductController extends Controller {
   
@@ -53,7 +55,7 @@ class ProductController extends Controller {
   
   function update($id) {
     $data = [];
-    $data['product'] = Product::with(['supplies'])->find($id);
+    $data['product'] = Product::with(['supplies', 'manufacturer'])->find($id);
     $data['work'] = Work::with(['client'])->find($data['product']->work_id);
     return Inertia::render('Product/Form', $data);
   }
@@ -81,5 +83,32 @@ class ProductController extends Controller {
 
     $redirect = $request->op==='end' ? redirect()->route('work-progress') : back();
     return $redirect->with('message', 'Producto <'. $product->code .'> registrado correctamente al Trabajo de <'. $work->client->fullname . ' en fecha ' . $work->deadline .'>.');
+  }
+
+  function addPhoto($id) {
+    $data = [];
+    $data['product'] = Product::find($id);
+    $data['photo'] = new Productphoto();
+    return Inertia::render('Product/FormPhoto', $data);
+  }
+
+  function savePhoto(Request $request, $id) {
+    $data = $request->all();
+    $img_url = "product-".time().".png";
+    $path = '/images/products/';
+    $directory = public_path().$path;
+    if (!file_exists($directory)) {
+      mkdir($directory, 0777, true);
+    }
+    $filepath = str_replace('/', DIRECTORY_SEPARATOR, $directory) . $img_url;
+    $img = Image::make(file_get_contents($data['file']))->save($filepath);
+
+    $photo = new Productphoto();
+    $photo->photourl = $path.$img_url;
+    $photo->description = $data['description'];
+    $photo->product_id = $id;
+    $photo->save();
+    $product = Product::find($id);
+    return redirect()->route('works.list', ['id' => $product->work_id])->with('message', 'Fotografía registrada correctamente.');
   }
 }

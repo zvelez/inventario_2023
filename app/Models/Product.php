@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model {
   
@@ -30,5 +31,9 @@ class Product extends Model {
 
   public function supplies(): BelongsToMany {
     return $this->belongsToMany(Supply::class, 'product_assigneds', 'product_id', 'supply_id')->withPivot('amount');
+  }
+
+  public function gallery(): HasMany {
+    return $this->hasMany(Productphoto::class);
   }
 }

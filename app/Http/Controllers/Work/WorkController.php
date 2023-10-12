@@ -86,6 +86,13 @@ class WorkController extends Controller {
     return redirect()->route('work-progress')
       ->with('message', 'Trabajo <'. $work->created_at .' para el cliente ' . $client->fullname .'> ha actualizado.');
   }
+  
+  function list($id) {
+    $data = [];
+    $data['work'] = Work::with(['client', 'products', 'products.gallery'])->find($id);
+    //dd($data['work']->toArray());
+    return Inertia::render('Work/List', $data);
+  }
 
   function filters(Request $request) {
     $request->validate([

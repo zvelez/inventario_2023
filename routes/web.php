@@ -97,6 +97,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/works/{id}/view', [WorkController::class, 'view'])->name('works.view');
   Route::get('/works/{id}/edit', [WorkController::class, 'update'])->name('works.update');
   Route::put('/works/{id}/edit', [WorkController::class, 'edit']);
+  Route::get('/works/{id}/list', [WorkController::class, 'list'])->name('works.list');
   Route::post('/works/filters', [WorkController::class, 'filters'])->name('works.filters');
   Route::delete('/works/{id}', [WorkController::class, 'delete']);
   Route::get('/works/{wid}/add', [ProductController::class, 'create'])->name('works.add');
@@ -115,6 +116,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/products/{id}/edit', [ProductController::class, 'update'])->name('products.update');
   Route::put('/products/{id}/edit', [ProductController::class, 'edit']);
   Route::delete('/products/{id}', [ProductController::class, 'delete']);
+  Route::get('/products/{id}/photo/add', [ProductController::class, 'addPhoto'])->name('products.photo.add');
+  Route::post('/products/{id}/photo/add', [ProductController::class, 'savePhoto']);
 
   Route::get('/manufacturers', [ManufacturerController::class, 'index'])->name('manufacturers');
   Route::get('/manufacturers/create', [ManufacturerController::class, 'create'])->name('manufacturers.create');
