@@ -95,7 +95,7 @@ const clickAction = () => {
         </div>
 
         <div class="d-flex justify-content-between m-2">
-          <Link :href="route('users')" class="btn btn-link">Cancelar</Link>
+          <Link :href="route('orders')" class="btn btn-link">Cancelar</Link>
           <BreezeButton class="btn btn-primary">{{ buttonLabel }}</BreezeButton>
         </div>
       </form>

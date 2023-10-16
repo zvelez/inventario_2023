@@ -55,14 +55,14 @@ class RoleController extends Controller {
         'label' => 'Proveedores',
       ];
     }
-    if(RoleController::checkPermission(['ADMSYS'])) {
+    if(RoleController::checkPermission(['ADMSYS', 'ALMAC'])) {
       $menu[] = [
         'url' => route('inventory'),
         'active' => strpos(Route::currentRouteName(), 'inventory'),
         'label' => 'Inventario',
       ];
     }
-    if(RoleController::checkPermission(['ADMSYS', 'PROD', 'CALID'])) {
+    if(RoleController::checkPermission(['ADMSYS', 'ALMAC', 'PROD', 'CALID'])) {
       $menu[] = [
         'url' => route('orders'),
         'active' => strpos(Route::currentRouteName(), 'orders'),

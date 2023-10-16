@@ -42,7 +42,8 @@ class UserController extends Controller {
       'fullname' => $request->fullname,
       'email' => $request->email,
       'role_id' => $request->role_id,
-      'password' => Hash::make($newPass),
+      'password' => Hash::make($request->email),
+      //'password' => Hash::make($newPass),
     ]);
 
     event(new Registered($user));

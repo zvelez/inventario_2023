@@ -51,7 +51,7 @@ class OrderentryController extends Controller {
 
     $supplier = Supplier::find($request->supplier_id);
 
-    return redirect()->route('orders')
+    return redirect()->route('orders.add', ['id' => $order->id])
                       ->with('message', 'Pedido a <'. $supplier->name. ' en fecha ' .$order->date .'> registrado correctamente.');
   }
 
@@ -105,6 +105,12 @@ class OrderentryController extends Controller {
 
     return redirect()->route('orders')
                     ->with('message', 'Pedido a <'. $supplier->name. ' en fecha ' .$order->date .'> actualizado correctamente.');
+  }
+
+  function list($id) {
+    $data = [];
+    $data['order'] = Orderentry::with(['supplies'])->find($id);
+    return Inertia::render('Orderentry/List', $data);
   }
 
   function delete($id) {}

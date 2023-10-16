@@ -25,14 +25,16 @@ class SupplyController extends Controller {
       'brand' => 'required|string|max:255',
       'amount' => 'required|numeric',
       'orderentry_id' => 'required',
+      'unit' => 'nullable|string',
       'op' => 'required',
     ]);
 
     $supply = Supply::create([
-      'code' => NULL,
+      'code' => $request->code,
       'description' => $request->description,
       'brand' => $request->brand,
       'amount' => $request->amount,
+      'unit' => $request->unit,
       'unitprice' => 0,
       'deliverynote' => NULL,
       'orderentry_id' => $request->orderentry_id,
@@ -83,6 +85,30 @@ class SupplyController extends Controller {
     $data['supply'] = Supply::find($id);
     $data['order'] = Orderentry::with('supplier')->find($id);
     return Inertia::render('Supply/Form', $data);
+  }
+
+  function edit(Request $request, $id) {
+    $request->validate([
+      'code' => 'nullable|string|max:255',
+      'description' => 'required|string',
+      'brand' => 'required|string|max:255',
+      'amount' => 'required|numeric',
+      'orderentry_id' => 'required',
+      'unit' => 'nullable|string',
+    ]);
+
+    $supply = Supply::find($id);
+    
+    $supply->code = $request->code;
+    $supply->description = $request->description;
+    $supply->brand = $request->brand;
+    $supply->amount = $request->amount;
+    $supply->unit = $request->unit;
+    $supply->save();
+
+    $order = Orderentry::with('supplier')->find($request->orderentry_id);
+
+    return redirect()->route('orders')->with('message', 'Insumo <'. $supply->code .'> actualizado correctamente.');
   }
 
   function receive($id) {

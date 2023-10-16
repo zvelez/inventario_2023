@@ -76,6 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::post('/orders/{oid}/add', [SupplyController::class, 'store']);
   Route::get('/orders/{id}/edit', [OrderentryController::class, 'update'])->name('orders.update');
   Route::put('/orders/{id}/edit', [OrderentryController::class, 'edit']);
+  Route::get('/orders/{id}/list', [OrderentryController::class, 'list'])->name('orders.list');
   Route::get('/orders/{oid}/receive', [OrderentryController::class, 'receive'])->name('orders.receive');
   Route::post('/orders/{oid}/receive', [OrderentryController::class, 'pickup']);
   Route::post('/orders/filters', [OrderentryController::class, 'filters'])->name('orders.filters');

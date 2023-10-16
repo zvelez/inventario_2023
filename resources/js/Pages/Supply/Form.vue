@@ -32,7 +32,7 @@ const buttonLabel = props.supply.id !== undefined ? 'Actualizar' : 'Añadir más
 const submit = () => {
   console.log(form.data());
   if(props.supply.id !== undefined) {
-    form.put(route('suppliers.update', {id: props.supply.id}));
+    form.put(route('supplies.update', {id: props.supply.id}));
   }
   else {
     form.post(route('orders.add', {oid: props.order.id}));

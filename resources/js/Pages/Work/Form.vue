@@ -92,7 +92,7 @@ const searchClient = ({ action, searchQuery, callback }) => {
           </div>
 
           <div class="d-flex justify-content-between m-2">
-            <Link :href="route('orders')" class="btn btn-link">Cancelar</Link>
+            <Link :href="route('work-progress')" class="btn btn-link">Cancelar</Link>
             <div class="d-flex">
               <BreezeButton class="btn btn-success" @click="form.op='end'" v-if="props.work.id === undefined">Finalizar</BreezeButton>
               <BreezeButton class="btn btn-primary" @click="form.op='next'">{{ buttonLabel }}</BreezeButton>

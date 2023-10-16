@@ -96,6 +96,9 @@ onMounted(() => {
                   <Link :href="route('orders.update', {id: order.id})" class="btn btn-warning m-1">
                     <font-awesome-icon :icon="['fa', 'pen']" />
                   </Link>
+                  <Link :href="route('orders.list', {id: order.id})" class="btn btn-success m-1">
+                    <font-awesome-icon :icon="['fa', 'clipboard-list']" />
+                  </Link>
                   <Link :href="route('orders.receive', {id: order.id})" class="btn btn-primary m-1">
                     <font-awesome-icon :icon="['fa', 'truck-field']" />
                   </Link>
