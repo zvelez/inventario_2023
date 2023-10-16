@@ -57,6 +57,7 @@ class ProductController extends Controller {
     $data = [];
     $data['product'] = Product::with(['supplies', 'manufacturer'])->find($id);
     $data['work'] = Work::with(['client'])->find($data['product']->work_id);
+
     return Inertia::render('Product/Form', $data);
   }
 
@@ -67,13 +68,29 @@ class ProductController extends Controller {
       'amount' => 'required|numeric',
       'unitprice' => 'required|numeric',
     ]);
-
+    //dd($request->supplies);
     $product = Product::find($id);
     $product->code = $request->code;
     $product->name = $request->name;
     $product->amount = $request->amount;
     $product->unitprice = $request->unitprice;
     $product->save();
+
+    foreach($request->supplies as $supp) {
+      $ass = ProductAssigned::where('product_id', '=', $id)
+                    ->where('supply_id', '=', $supp['id'])->first();
+      if(empty($ass)) {
+        ProductAssigned::create([
+          'product_id' => $product->id,
+          'supply_id' => $supp['id'],
+          'amount' => $supp['pivot']['amount'],
+        ]);
+      }
+      else {
+        $ass->amount = floatval($supp['pivot']['amount']);
+        $ass->save();
+      }
+    }
 
     return redirect()->route('work-progress')->with('message', 'Producto <'. $product->code .'> actualizado correctamente.');
   }

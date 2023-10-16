@@ -30,8 +30,8 @@ const printDiv = () => {
 
         <div class="d-flex justify-content-between">
           <h3 class="pt-2"><small class="text-muted">Historial de entregas</small></h3>
-          <Link class="btn btn-link d-print-none" :href="route('works.deliveries.create', {wid: work.id})">
-            <font-awesome-icon :icon="['fa', 'plus']" /> Registrar nuevo
+          <Link class="btn btn-link d-print-none" :href="route('works.add', {wid: work.id})">
+            <font-awesome-icon :icon="['fa', 'plus']" /> Registrar nuevo producto
           </Link>
         </div>
         

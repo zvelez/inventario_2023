@@ -40,6 +40,6 @@ class Supply extends Model {
   }
 
   public function products(): BelongsToMany {
-    return $this->belongsToMany(Product::class, 'product_assigneds', 'supply_id', 'product_id')->withPivot('amount');
+    return $this->belongsToMany(Product::class, 'product_assigneds', 'supply_id', 'product_id')->withPivot(['amount']);
   }
 }

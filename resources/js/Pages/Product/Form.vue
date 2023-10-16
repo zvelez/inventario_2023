@@ -40,7 +40,7 @@
 
   let suppliesList = ref(form.supplies);
   let supplySel = ref(null);
-
+  //console.log(suppliesList.value);
   let searchComp = ref(null);
 
   const submit = () => {
@@ -54,8 +54,7 @@
     else {
       form.post(route('works.add', {wid: props.work.id}));
     }
-    form.reset();
-    searchComp.value.cleanData();
+    location.reload();
   };
 
   const addItem = () => {
@@ -70,7 +69,7 @@
 
   const addItemCreate = () => {
     const valueD = Object.assign({}, supplySel.value.data);
-    console.log(supplySel.value, valueD);
+    console.log('addItemCreate', supplySel.value, valueD);
     suppliesList.value.push({
       id: valueD.id,
       code: valueD.code,
@@ -78,6 +77,9 @@
       brand: valueD.brand,
       unit: valueD.unit,
       amount: valueD.amount,
+      pivot: {
+        amount: valueD.amount,
+      }
     });
     supplySel.value = null;
     searchComp.value.cleanData();
@@ -138,11 +140,11 @@
           </div>
           <div class="form-group">
             <BreezeLabel for="amount" class="col-form-label" value="Cantidad" />
-            <BreezeInput id="amount" type="number" class="form-control" v-model="form.amount" step="1" required />
+            <BreezeInput id="amount" type="number" class="form-control" v-model="form.amount" step=".001" required />
           </div>
           <div class="form-group">
             <BreezeLabel for="unitprice" class="col-form-label" value="Precio unitario" />
-            <BreezeInput id="unitprice" type="number" class="form-control" v-model="form.unitprice" step=".01" required />
+            <BreezeInput id="unitprice" type="number" class="form-control" v-model="form.unitprice" step=".001" required />
           </div>
           <div class="supplies-wrapper">
             <div class="table-responsive">
@@ -161,7 +163,7 @@
                     <td>{{ item.brand }}</td>
                     <td>
                       <div class="form-group d-flex justify-content-between align-items-end">
-                        <BreezeInput type="number" class="form-control" v-model="item.amount" step="1" placeholder="cantidad" />
+                        <BreezeInput type="number" class="form-control" v-model="item.pivot.amount" step=".001" placeholder="cantidad" />
                         <span>{{ item.unit }}</span>
                       </div>
                     </td>
