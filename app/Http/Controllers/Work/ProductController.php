@@ -60,29 +60,22 @@ class ProductController extends Controller {
     return Inertia::render('Product/Form', $data);
   }
 
-  function edit(Request $request, $wid) {
+  function edit(Request $request, $id) {
     $request->validate([
       'code' => 'required|string|max:255',
       'name' => 'required|string|max:255',
       'amount' => 'required|numeric',
       'unitprice' => 'required|numeric',
-      'manufacturer_id' => 'required',
-      'op' => 'required',
     ]);
 
-    $product = Product::create([
-      'manufacturer_id' => $request->manufacturer_id,
-      'work_id' => $wid,
-      'code' => $request->code,
-      'name' => $request->name,
-      'amount' => $request->amount,
-      'unitprice' => $request->unitprice,
-    ]);
+    $product = Product::find($id);
+    $product->code = $request->code;
+    $product->name = $request->name;
+    $product->amount = $request->amount;
+    $product->unitprice = $request->unitprice;
+    $product->save();
 
-    $work = Work::with(['client'])->find($wid);
-
-    $redirect = $request->op==='end' ? redirect()->route('work-progress') : back();
-    return $redirect->with('message', 'Producto <'. $product->code .'> registrado correctamente al Trabajo de <'. $work->client->fullname . ' en fecha ' . $work->deadline .'>.');
+    return redirect()->route('work-progress')->with('message', 'Producto <'. $product->code .'> actualizado correctamente.');
   }
 
   function addPhoto($id) {

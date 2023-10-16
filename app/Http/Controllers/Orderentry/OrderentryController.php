@@ -51,7 +51,7 @@ class OrderentryController extends Controller {
 
     $supplier = Supplier::find($request->supplier_id);
 
-    return redirect()->route('orders.add', ['id' => $order->id])
+    return redirect()->route('orders.add', ['oid' => $order->id])
                       ->with('message', 'Pedido a <'. $supplier->name. ' en fecha ' .$order->date .'> registrado correctamente.');
   }
 

@@ -44,7 +44,8 @@
   let searchComp = ref(null);
 
   const submit = () => {
-    form.manufacturer_id = manufacturerSel.value.id;
+    console.log(manufacturerSel.value);
+    form.manufacturer_id = props.product.id !== undefined? props.product.manufacturer_id : manufacturerSel.value.id;
     form.supplies = suppliesList.value;
     console.log(form.manufacturer_id, manufacturerSel.value, form.supplies);
     if(props.product.id !== undefined) {
@@ -83,6 +84,18 @@
   };
 
   const addItemUpdate = () => {
+    const valueD = Object.assign({}, supplySel.value.data);
+    console.log(supplySel.value, valueD);
+    suppliesList.value.push({
+      id: valueD.id,
+      code: valueD.code,
+      description: valueD.description,
+      brand: valueD.brand,
+      unit: valueD.unit,
+      amount: valueD.amount,
+    });
+    supplySel.value = null;
+    searchComp.value.cleanData();
   };
 </script>
 
