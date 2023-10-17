@@ -95,6 +95,14 @@ class ProductController extends Controller {
     return redirect()->route('work-progress')->with('message', 'Producto <'. $product->code .'> actualizado correctamente.');
   }
 
+  function delete($id) {
+    Productphoto::where('product_id', '=', $id)->delete();
+    ProductAssigned::where('product_id', '=', $id)->delete();
+    $product = Product::find($id);
+    $product->delete();
+    return response()->json('ok');
+  }
+
   function addPhoto($id) {
     $data = [];
     $data['product'] = Product::find($id);

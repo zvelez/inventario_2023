@@ -116,7 +116,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/products', [ProductController::class, 'index'])->name('products');
   Route::get('/products/{id}/edit', [ProductController::class, 'update'])->name('products.update');
   Route::put('/products/{id}/edit', [ProductController::class, 'edit']);
-  Route::delete('/products/{id}', [ProductController::class, 'delete']);
+  Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
   Route::get('/products/{id}/photo/add', [ProductController::class, 'addPhoto'])->name('products.photo.add');
   Route::post('/products/{id}/photo/add', [ProductController::class, 'savePhoto']);
 

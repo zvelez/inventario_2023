@@ -82,7 +82,9 @@ onMounted(() => {
                         <td class="align-middle text-nowrap">
                           <font-awesome-icon class="text-success" :icon="['fas', 'truck-arrow-right']" v-if="item.in === 0" />
                           <font-awesome-icon class="text-primary" :icon="['fas', 'truck-ramp-box']" v-if="item.in === 1" />
-                          <small> {{ item.code }}</small>
+                          <small>
+                            <a class="btn btn-link" :href="route('works.deliveries.update', {wid: work.id, id: item.id})">{{ item.code }}</a>
+                          </small>
                         </td>
                         <td class="align-middle"><small>{{ item.estimatedate }}</small></td>
                         <td class="align-middle"><small>{{ item.amount }}</small></td>

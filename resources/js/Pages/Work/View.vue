@@ -85,7 +85,9 @@ const printDiv = () => {
                       <th class="align-middle">Código</th>
                       <th class="align-middle">Descripción</th>
                       <th class="align-middle">Marca</th>
-                      <th class="align-middle">Cantidad asignada</th>
+                      <th class="align-middle text-end">Precio unitario</th>
+                      <th class="align-middle text-end">Cantidad asignada</th>
+                      <th class="align-middle text-end">Precio Total</th>
                       <th class="align-middle"></th>
                     </tr>
                   </thead>
@@ -94,9 +96,11 @@ const printDiv = () => {
                       <td class="align-middle">{{ item.code }}</td>
                       <td class="align-middle">{{ item.description }}</td>
                       <td class="align-middle">{{ item.brand }}</td>
+                      <td class="align-middle text-end">Bs. {{ item.amount }}</td>
                       <td class="align-middle text-end">{{ item.pivot.amount }} {{ item.unit }}</td>
+                      <td class="align-middle text-end">Bs. {{ item.totalprice }}</td>
                       <td>
-                        <Link class="btn btn-warning m-1 d-print-none" :href="route('works.update', {id: work.id})">
+                        <Link class="btn btn-warning m-1 d-print-none" :href="route('supplies.update', {id: work.id})">
                           <font-awesome-icon :icon="['fa', 'pen']" />
                         </Link>
                       </td>

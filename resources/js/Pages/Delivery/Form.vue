@@ -28,7 +28,7 @@ const form = useForm({
 });
 
 const titlePage = props.delivery.id !== undefined ? 
-                    'Actualizar los datos del pedido ' + props.delivery.date : 
+                    'Actualizar los datos de la entrega #' + props.delivery.id : 
                     'Registrar nuevo pedido para el Trabajo #' + props.work.id;
 
 const buttonLabel = props.delivery.id !== undefined ? 'Actualizar' : 'Registrar';
@@ -67,9 +67,10 @@ const submit = () => {
           </div>
           <div class="form-group">
             <BreezeLabel for="code" class="col-form-label" value="Producto/insumo" />
-            <select id="code" class="form-control" v-model="form.code" required>
+            <select id="code" class="form-control" v-model="form.code" required v-if="props.delivery.id === undefined">
               <option v-for="item in items.filter((a) => a.in == form.in)" :value="item.code">{{ item.label }}</option>
             </select>
+            <BreezeInput id="responsible" class="form-control" v-model="form.code" v-else required disabled />
           </div>
           <div class="form-group">
             <BreezeLabel for="responsible" class="col-form-label" value="Responsable" />
@@ -93,7 +94,7 @@ const submit = () => {
           </div>
           <div class="form-group">
             <BreezeLabel for="amount" class="col-form-label" value="Cantidad" />
-            <BreezeInput id="amount" type="number" step="1" class="form-control" v-model="form.amount" />
+            <BreezeInput id="amount" type="number" step="0.001" class="form-control" v-model="form.amount" />
           </div>
           <div class="form-group">
             <BreezeLabel for="observations" class="col-form-label" value="Observaciones" />
@@ -101,7 +102,7 @@ const submit = () => {
           </div>
 
           <div class="d-flex justify-content-between m-2">
-            <Link :href="route('users')" class="btn btn-link">Cancelar</Link>
+            <Link :href="route('deliveries')" class="btn btn-link">Cancelar</Link>
             <BreezeButton class="btn btn-primary">{{ buttonLabel }}</BreezeButton>
           </div>
         </form>

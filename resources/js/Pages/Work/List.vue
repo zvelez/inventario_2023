@@ -1,6 +1,10 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+import { onMounted, ref } from "vue";
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Modal } from "bootstrap";
+
+import axios from 'axios';
 
 import moment from 'moment';
 
@@ -8,11 +12,40 @@ const props = defineProps({
   work: Object,
 });
 
+let productSel = ref(null);
+let modalEle = ref(null);
+let thisModalObj = null;
+
+onMounted(() => {
+  thisModalObj = new Modal(modalEle.value);
+});
+
 const printDiv = () => {
-     var printContents = document.getElementById('preview-page').innerHTML;
-     document.body.innerHTML = printContents;
-     window.print();
+  var printContents = document.getElementById('preview-page').innerHTML;
+  document.body.innerHTML = printContents;
+  window.print();
+  location.reload();
+}
+
+const deleteAlert = (prod) => {
+  productSel.value = prod;
+  thisModalObj.show();
+}
+
+const deleteCancel = () => {
+  productSel.value = null;
+  thisModalObj.hide();
+}
+
+const deleteProd = async () => {
+  const response = await axios.delete(route('products.delete', {id: productSel.value.id}));
+  if(response.status == 200) {
+    console.log(response.data);
     location.reload();
+  }
+  else {
+    productSel.value = null;
+  }
 }
 
 </script>
@@ -44,8 +77,11 @@ const printDiv = () => {
                   <button class="btn btn-white dropdown-toggle position-absolute top-0 end-0" 
                           type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                   <ul class="dropdown-menu">
-                    <li><Link class="btn btn-link" :href="route('products.update', {id: prod.id})">Editar</Link></li>
-                    <li><Link class="btn btn-link" :href="route('products.photo.add', {id: prod.id})">Agregar fotografía</Link></li>
+                    <li><Link class="btn btn-white" :href="route('products.update', {id: prod.id})">Editar</Link></li>
+                    <li style="text-wrap: nowrap;">
+                      <Link class="btn btn-white" :href="route('products.photo.add', {id: prod.id})">Agregar fotografía</Link>
+                    </li>
+                    <li><Button class="btn btn-white" @click="deleteAlert(prod)">Eliminar</Button></li>
                   </ul>
                 </div>
                 <div class="row">
@@ -65,6 +101,27 @@ const printDiv = () => {
         </div>
       </div>
     </template>
+    <div class="modal fade" tabindex="-1" role="dialog" ref="modalEle">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-danger">
+            <h5 class="modal-title text-center w-100 text-white fw-bold">
+              Eliminar producto
+            </h5>
+          </div>
+          <div class="modal-body">
+            <p class="text-center" v-if="productSel === null">Algo salio mal</p>
+            <p class="text-center" v-else>
+              ¿Realmente desea eliminar el producto <i>{{ productSel.name }} ({{ productSel.code }})</i>?
+            </p>
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" @click="deleteCancel()">Cancelar</button>
+            <button type="button" class="btn btn-primary" @click="deleteProd">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </BreezeAuthenticatedLayout>
 
 </template>
