@@ -48,11 +48,11 @@ onMounted(() => {
               <th class="align-middle">Código de Insumo</th>
               <th class="align-middle">Descripción</th>
               <th class="align-middle">Marca</th>
-              <th class="align-middle">Precio unitario</th>
-              <th class="align-middle">Stock Inicial</th>
-              <th class="align-middle">Entrada</th>
-              <th class="align-middle">Salida</th>
-              <th class="align-middle">Stock Actual</th>
+              <th class="align-middle text-end">Precio unitario</th>
+              <th class="align-middle text-end">Stock Inicial</th>
+              <th class="align-middle text-end">Entrada</th>
+              <th class="align-middle text-end">Salida</th>
+              <th class="align-middle text-end">Stock Actual</th>
               <th class="align-middle">Proveedor(es)</th>
               <th class="align-middle"></th>
             </tr>
