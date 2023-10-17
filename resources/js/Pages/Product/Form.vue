@@ -43,16 +43,16 @@
   //console.log(suppliesList.value);
   let searchComp = ref(null);
 
-  const submit = async () => {
+  const submit = () => {
     console.log(manufacturerSel.value);
     form.manufacturer_id = props.product.id !== undefined? props.product.manufacturer_id : manufacturerSel.value.id;
     form.supplies = suppliesList.value;
     console.log(form.manufacturer_id, manufacturerSel.value, form.supplies);
     if(props.product.id !== undefined) {
-      await form.put(route('products.update', {id: props.product.id}));
+      form.put(route('products.update', {id: props.product.id}));
     }
     else {
-      await form.post(route('works.add', {wid: props.work.id}));
+      form.post(route('works.add', {wid: props.work.id}));
     }
     //location.reload();
   };
