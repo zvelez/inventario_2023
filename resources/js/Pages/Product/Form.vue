@@ -54,7 +54,7 @@
     else {
       await form.post(route('works.add', {wid: props.work.id}));
     }
-    location.reload();
+    //location.reload();
   };
 
   const addItem = () => {
