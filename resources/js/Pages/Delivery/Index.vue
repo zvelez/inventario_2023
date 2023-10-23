@@ -56,7 +56,7 @@ onMounted(() => {
             </span>
         </div>
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3 py-4" v-for="work in worksList">
+          <div class="col-12 col-sm-6 col-md-4 py-4" v-for="work in worksList">
             <div class="card">
               <div class="card-header d-flex justify-content-between">
                 <h5>{{ work.client.fullname }} <a :href="route('works.view', {id: work.id})">#{{ work.id }}</a></h5>
@@ -75,7 +75,10 @@ onMounted(() => {
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
-                      <th><small>Código</small></th><th class=" text-nowrap"><small>F. estimada</small></th><th><small>Cantidad</small></th>
+                      <th><small>Código</small></th>
+                      <th class=" text-nowrap"><small>F. estimada</small></th>
+                      <th class=" text-nowrap"><small>F. Entrega</small></th>
+                      <th class=" text-end"><small>Cantidad</small></th>
                     </thead>
                     <tbody>
                       <tr v-for="item in work.deliveries">
@@ -87,7 +90,8 @@ onMounted(() => {
                           </small>
                         </td>
                         <td class="align-middle"><small>{{ item.estimatedate }}</small></td>
-                        <td class="align-middle"><small>{{ item.amount }}</small></td>
+                        <td class="align-middle"><small>{{ item.deliverydate }}</small></td>
+                        <td class="align-middle text-end"><small>{{ item.amount }} {{ item.unit }}</small></td>
                       </tr>
                     </tbody>
                   </table>

@@ -60,8 +60,8 @@ const findWork = (products, id) => {
               <th class="align-middle">Marca</th>
               <th class="align-middle">Fecha</th>
               <th class="align-middle">Cantidad</th>
-              <th class="align-middle">Precio unitario Bs.</th>
-              <th class="align-middle">Importe Bs.</th>
+              <th class="align-middle">Precio unitario ($us)</th>
+              <th class="align-middle">Importe ($us)</th>
               <th class="align-middle">Taller</th>
               <th class="align-middle">Cód. Trabajo</th>
               <th class="align-middle">Destino</th>

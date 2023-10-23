@@ -11,7 +11,7 @@ const props = defineProps({
   supply: Object,
   order: Object,
 });
-
+console.log(props.supply);
 const form = useForm({
   code: props.supply.id !== undefined ? props.supply.code : '',
   description: props.supply.id !== undefined ? props.supply.description : '',

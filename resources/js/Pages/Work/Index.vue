@@ -64,6 +64,7 @@ onMounted(() => {
           <table class="table table-hover table-striped">
             <thead>
               <tr>
+                <th class="align-middle">Nro</th>
                 <th class="align-middle">Cliente</th>
                 <th class="align-middle">Teléfono</th>
                 <th class="align-middle">Fecha de registro</th>
@@ -74,6 +75,7 @@ onMounted(() => {
             </thead>
             <tbody>
               <tr v-for="work in worksList">
+                <td class="align-middle">{{ work.id }}</td>
                 <td class="align-middle">{{ work.client.fullname }}</td>
                 <td class="align-middle">{{ work.client.phone }}</td>
                 <td class="align-middle">{{ moment(work.created_at).format('DD/MM/YYYY') }}</td>

@@ -96,11 +96,11 @@ const printDiv = () => {
                       <td class="align-middle">{{ item.code }}</td>
                       <td class="align-middle">{{ item.description }}</td>
                       <td class="align-middle">{{ item.brand }}</td>
-                      <td class="align-middle text-end">Bs. {{ item.amount }}</td>
+                      <td class="align-middle text-end">$us {{ item.unitprice }}</td>
                       <td class="align-middle text-end">{{ item.pivot.amount }} {{ item.unit }}</td>
-                      <td class="align-middle text-end">Bs. {{ item.totalprice }}</td>
+                      <td class="align-middle text-end">$us {{ (item.unitprice * item.pivot.amount).toFixed(2) }}</td>
                       <td>
-                        <Link class="btn btn-warning m-1 d-print-none" :href="route('supplies.update', {id: work.id})">
+                        <Link class="btn btn-warning m-1 d-print-none" :href="route('supplies.update', {id: item.id})">
                           <font-awesome-icon :icon="['fa', 'pen']" />
                         </Link>
                       </td>
@@ -128,6 +128,7 @@ const printDiv = () => {
                 <th class="align-middle">Fecha de entrega</th>
                 <th class="align-middle text-end">Cantidad</th>
                 <th class="align-middle">Responsable</th>
+                <th class="align-middle">Contacto</th>
                 <th class="align-middle">Observaciones</th>
                 <th class="align-middle"></th>
               </tr>
@@ -142,8 +143,10 @@ const printDiv = () => {
                 <td class="align-middle">{{ item.responsible }}</td>
                 <td class="align-middle">{{ item.contact }} - {{ item.dnicontact }}</td>
                 <td class="align-middle">{{ item.observations }}</td>
-                <td class="align-middle">
-
+                <td>
+                  <Link class="btn btn-warning m-1 d-print-none" :href="route('works.deliveries.update', {id: item.id, wid: work.id})">
+                    <font-awesome-icon :icon="['fa', 'pen']" />
+                  </Link>
                 </td>
               </tr>
             </tbody>

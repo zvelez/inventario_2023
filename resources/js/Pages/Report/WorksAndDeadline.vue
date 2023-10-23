@@ -98,7 +98,7 @@
               <td class="align-middle text-end">{{ prod.product_code }}</td>
               <td class="align-middle">{{ prod.product_name }}</td>
               <td class="align-middle text-end">{{ prod.product_amount }}</td>
-              <td class="align-middle text-end">Bs. {{ prod.product_price }}</td>
+              <td class="align-middle text-end">$us {{ prod.product_price }}</td>
               <td class="align-middle">{{ prod.workshop }}</td>
             </tr>
           </tbody>

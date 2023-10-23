@@ -105,16 +105,16 @@
                       <td class="align-middle text-end">{{ index }}</td>
                       <td class="align-middle text-end">{{ prod.code }}</td>
                       <td class="align-middle">{{ prod.name }}</td>
-                      <td class="align-middle text-end">Bs. {{ prod.unitprice }}</td>
+                      <td class="align-middle text-end">$us {{ prod.unitprice }}</td>
                       <td class="align-middle text-end">{{ prod.amount }}</td>
-                      <td class="align-middle text-end">Bs. {{ (prod.amount * prod.unitprice ).toFixed(2) }}</td>
+                      <td class="align-middle text-end">$us {{ (prod.amount * prod.unitprice ).toFixed(2) }}</td>
                     </tr>
                   </tbody>
                   <tfoot>
                     <tr class="table-borderless" style="border-width: 0 !important;">
                       <td class="align-middle" style="border-width: 0 !important;" colspan="4"></td>
                       <td class="align-middle fw-bold text-end" style="border-width: 1px !important;">Total</td>
-                      <td class="align-middle fw-bold text-end" style="border-width: 1px !important;">Bs. {{ total }}</td>
+                      <td class="align-middle fw-bold text-end" style="border-width: 1px !important;">$us {{ total }}</td>
                     </tr>
                   </tfoot>
                 </table>

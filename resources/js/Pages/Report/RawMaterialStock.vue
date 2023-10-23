@@ -81,11 +81,11 @@
               <th class="align-middle">Código de Insumo</th>
               <th class="align-middle">Descripción</th>
               <th class="align-middle">Marca</th>
-              <th class="align-middle">Precio unitario</th>
-              <th class="align-middle">Stock Inicial</th>
-              <th class="align-middle">Entrada</th>
-              <th class="align-middle">Salida</th>
-              <th class="align-middle">Stock Actual</th>
+              <th class="align-middle text-end">Precio unitario</th>
+              <th class="align-middle text-end">Stock Inicial</th>
+              <th class="align-middle text-end">Entrada</th>
+              <th class="align-middle text-end">Salida</th>
+              <th class="align-middle text-end">Stock Actual</th>
               <th class="align-middle">Proveedor(es)</th>
               <th class="align-middle">Último abastecimiento</th>
               <th class="align-middle"></th>
@@ -96,7 +96,7 @@
               <td class="align-middle">{{ supp.code }}</td>
               <td class="align-middle">{{ supp.description }}</td>
               <td class="align-middle">{{ supp.brand }}</td>
-              <td class="align-middle text-end">Bs. {{ supp.unitprice }}</td>
+              <td class="align-middle text-end">$us {{ supp.unitprice }}</td>
               <td class="align-middle text-end">{{ supp.stock_start }}</td>
               <td class="align-middle text-end">{{ supp.stock_in }}</td>
               <td class="align-middle text-end">{{ supp.stock_out }}</td>

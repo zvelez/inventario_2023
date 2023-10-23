@@ -1,13 +1,16 @@
 <script setup>
-  import { ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import BreezeApplicationLogo from '@/Components/ApplicationLogo.vue';
   import BreezeDropdown from '@/Components/Dropdown.vue';
   import BreezeDropdownLink from '@/Components/DropdownLink.vue';
-  import { Link } from '@inertiajs/inertia-vue3';
+  import { Link, usePage  } from '@inertiajs/inertia-vue3';
   import MenuLinks from '@/Components/MenuLinks.vue';
   import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
   const showingNavigationDropdown = ref(false);
+  
+  const page = usePage();
+  const user = page.props.value.auth?.user;
 </script>
 
 <template>
@@ -36,13 +39,13 @@
                     <span class="d-inline-flex rounded-md">
                       <button type="button"
                         class="d-inline-flex align-items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                        {{ $page.props.auth.user.name }}
                         <font-awesome-icon :icon="['fa', 'chevron-down']" />
                       </button>
                     </span>
                   </template>
 
                   <template #content>
+                    <p class="mx-4 my-2 text-bold" v-if="user !== null">{{ user.fullname }}</p>
                     <BreezeDropdownLink :href="route('profile')" as="button">
                       Editar perfil
                     </BreezeDropdownLink>
@@ -68,6 +71,13 @@
           </div>
           <div class="collapse navbar-collapse" id="menuMobile">
             <MenuLinks></MenuLinks>
+            <p class="mx-4 my-2 text-bold" v-if="user !== null">{{ user.fullname }}</p>
+            <BreezeDropdownLink :href="route('profile')" as="button">
+              Editar perfil
+            </BreezeDropdownLink>
+            <BreezeDropdownLink :href="route('profile.password')" as="button">
+              Cambio de contraseña
+            </BreezeDropdownLink>
             <BreezeDropdownLink :href="route('logout')" method="post" as="button">
               Cerrar sesión
             </BreezeDropdownLink>

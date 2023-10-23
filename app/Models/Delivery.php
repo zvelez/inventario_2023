@@ -23,11 +23,16 @@ class Delivery extends Model {
     'user_id',
   ];
 
-  protected $appends = ['in_str'];
+  protected $appends = ['in_str', 'unit'];
 
   protected $dates = ['created_at', 'updated_at'];
 
   public function getInStrAttribute() {
     return $this->in? 'Insumo' : 'Producto';
+  }
+
+  public function getUnitAttribute() {
+    $it = $this->in? Supply::where('code', '=', $this->code)->first() : Product::where('code', '=', $this->code)->first();
+    return $this->in? $it->unit : 'pzas';
   }
 }
